@@ -1,45 +1,54 @@
 <?php
 
-namespace Steam\Command\GameServersService;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\GameServersService;
+
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetServerSteamIDsByIP implements CommandInterface
 {
     /**
-     * @var string
-     */
-    protected $serverIp;
-
-    /**
      * @param string $serverIp
      */
-    public function __construct($serverIp)
-    {
-        $this->serverIp = $serverIp;
-    }
+    public function __construct(
+        private string $serverIp
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IGameServersService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetServerSteamIDsByIP';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return string[]
+     */
+    public function getParams(): array
     {
         return [
             'server_ips' => $this->serverIp,

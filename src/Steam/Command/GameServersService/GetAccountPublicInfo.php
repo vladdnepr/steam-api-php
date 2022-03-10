@@ -1,45 +1,54 @@
 <?php
 
-namespace Steam\Command\GameServersService;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\GameServersService;
+
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetAccountPublicInfo implements CommandInterface
 {
     /**
-     * @var int
-     */
-    protected $steamId;
-
-    /**
      * @param int $steamId
      */
-    public function __construct($steamId)
-    {
-        $this->steamId = (int) $steamId;
-    }
+    public function __construct(
+        private int $steamId
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IGameServersService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetAccountPublicInfo';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return int[]
+     */
+    public function getParams(): array
     {
         return [
             'steamid' => $this->steamId,

@@ -1,45 +1,54 @@
 <?php
 
-namespace Steam\Command\GameServersService;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\GameServersService;
+
+use SquegTech\Steam\Command\CommandInterface;
 
 class QueryLoginToken implements CommandInterface
 {
     /**
-     * @var string
-     */
-    protected $loginToken;
-
-    /**
      * @param string $loginToken
      */
-    public function __construct($loginToken)
-    {
-        $this->loginToken = $loginToken;
-    }
+    public function __construct(
+        private string $loginToken
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IGameServersService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'QueryLoginToken';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return string[]
+     */
+    public function getParams(): array
     {
         return [
             'login_token' => $this->loginToken,

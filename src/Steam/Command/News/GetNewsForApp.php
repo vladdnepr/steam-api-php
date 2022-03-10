@@ -1,59 +1,54 @@
 <?php
 
-namespace Steam\Command\News;
+namespace SquegTech\Steam\Command\News;
 
-use Steam\Command\CommandInterface;
+use DateTime;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetNewsForApp implements CommandInterface
 {
     /**
      * @var int
      */
-    protected $appId;
+    private int $maxLength;
+
+    /**
+     * @var DateTime
+     */
+    private DateTime $endDate;
 
     /**
      * @var int
      */
-    protected $maxLength;
-
-    /**
-     * @var \DateTime
-     */
-    protected $endDate;
-
-    /**
-     * @var int
-     */
-    protected $count = 20;
+    private int $count = 20;
 
     /**
      * @var array
      */
-    protected $feeds = [];
+    private array $feeds = [];
 
     /**
      * @param int $appId
      */
-    public function __construct($appId)
-    {
-        $this->appId = (int) $appId;
-    }
+    public function __construct(
+        private int $appId
+    ) {}
 
     /**
      * @param int $count
-     * @return self
+     * @return $this
      */
-    public function setCount($count)
+    public function setCount(int $count): static
     {
         $this->count = $count;
         return $this;
     }
 
     /**
-     * @param \DateTime $endDate
-     * @return self
+     * @param DateTime $endDate
+     * @return $this
      */
-    public function setEndDate(\DateTime $endDate)
+    public function setEndDate(DateTime $endDate): static
     {
         $this->endDate = $endDate;
         return $this;
@@ -61,9 +56,9 @@ class GetNewsForApp implements CommandInterface
 
     /**
      * @param array $feeds
-     * @return self
+     * @return $this
      */
-    public function setFeeds(array $feeds)
+    public function setFeeds(array $feeds): static
     {
         $this->feeds = $feeds;
         return $this;
@@ -71,35 +66,50 @@ class GetNewsForApp implements CommandInterface
 
     /**
      * @param int $maxLength
-     * @return self
+     * @return $this
      */
-    public function setMaxLength($maxLength)
+    public function setMaxLength(int $maxLength): static
     {
         $this->maxLength = $maxLength;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'ISteamNews';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetNewsForApp';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v2';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return int[]
+     */
+    public function getParams(): array
     {
         $params = [
             'appid' => $this->appId,

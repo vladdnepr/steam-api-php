@@ -1,67 +1,70 @@
 <?php
 
-namespace Steam\Command\PlayerService;
+namespace SquegTech\Steam\Command\PlayerService;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetRecentlyPlayedGames implements CommandInterface
 {
     /**
-     * @var int
-     */
-    protected $steamId;
-
-    /**
-     * @var int
-     */
-    protected $count;
-
-    /**
      * @param int $steamId
      * @param int $count
      */
-    public function __construct($steamId, $count = 0)
-    {
-        $this->steamId = $steamId;
-        $this->count = $count;
-    }
+    public function __construct(
+        private int $steamId,
+        private int $count = 0
+    ) {}
 
     /**
      * @param int $count
-     *
-     * @return self
+     * @return $this
      */
-    public function setCount($count)
+    public function setCount(int $count): static
     {
         $this->count = $count;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IPlayerService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetRecentlyPlayedGames';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         return [
             'steamid' => $this->steamId,
-            'count' => empty($this->count) ? 0 : (int) $this->count,
+            'count' => $this->count,
         ];
     }
-} 
+}

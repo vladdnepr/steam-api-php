@@ -1,56 +1,60 @@
 <?php
 
-namespace Steam\Command\PlayerService;
+namespace SquegTech\Steam\Command\PlayerService;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetCommunityBadgeProgress implements CommandInterface
 {
     /**
-     * @var int
-     */
-    protected $steamId;
-
-    /**
-     * @var int
-     */
-    protected $badgeId;
-
-    /**
      * @param int $steamId
      * @param int $badgeId
      */
-    public function __construct($steamId, $badgeId)
-    {
-        $this->steamId = $steamId;
-        $this->badgeId = $badgeId;
-    }
+    public function __construct(
+        private int $steamId,
+        private int $badgeId
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IPlayerService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetCommunityBadgeProgress';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         return [
             'steamid' => $this->steamId,
             'badgeid' => $this->badgeId,
         ];
     }
-} 
+}

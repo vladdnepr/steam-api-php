@@ -1,102 +1,116 @@
 <?php
 
-namespace Steam\Command\PlayerService;
+namespace SquegTech\Steam\Command\PlayerService;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetOwnedGames implements CommandInterface
 {
     /**
-     * @var int
+     * @var bool
      */
-    protected $steamId;
+    private bool $includeAppInfo;
 
     /**
      * @var bool
      */
-    protected $includeAppInfo;
-
-    /**
-     * @var bool
-     */
-    protected $includeFreeGames;
+    private bool $includeFreeGames;
 
     /**
      * @var array
      */
-    protected $appIdsFilter;
+    private array $appIdsFilter;
 
     /**
      * @param int $steamId
      */
-    public function __construct($steamId)
-    {
-        $this->steamId = $steamId;
-    }
+    public function __construct(
+        private int $steamId
+    ) {}
 
     /**
      * @param array $appIdsFilter
-     *
-     * @return self
+     * @return $this
      */
-    public function setAppIdsFilter(array $appIdsFilter)
+    public function setAppIdsFilter(array $appIdsFilter): static
     {
         $this->appIdsFilter = $appIdsFilter;
         return $this;
     }
 
     /**
-     * @param boolean $includeAppInfo
-     *
-     * @return self
+     * @param bool $includeAppInfo
+     * @return $this
      */
-    public function setIncludeAppInfo($includeAppInfo)
+    public function setIncludeAppInfo(bool $includeAppInfo): static
     {
-        $this->includeAppInfo = (bool) $includeAppInfo;
+        $this->includeAppInfo = $includeAppInfo;
         return $this;
     }
 
     /**
-     * @param boolean $includeFreeGames
-     *
-     * @return self
+     * @param bool $includeFreeGames
+     * @return $this
      */
-    public function setIncludeFreeGames($includeFreeGames)
+    public function setIncludeFreeGames(bool $includeFreeGames): static
     {
-        $this->includeFreeGames = (bool) $includeFreeGames;
+        $this->includeFreeGames = $includeFreeGames;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IPlayerService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetOwnedGames';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return int[]
+     */
+    public function getParams(): array
     {
         $params =  [
             'steamid' => $this->steamId,
         ];
 
-        is_null($this->includeAppInfo) ?: $params['include_appinfo'] = $this->includeAppInfo;
-        is_null($this->includeFreeGames) ?: $params['include_played_free_games'] = $this->includeFreeGames;
-        empty($this->appIdsFilter) ?: $params['appids_filter'] = $this->appIdsFilter;
+        if (isset($this->includeAppInfo)) {
+            $params['include_appinfo'] = $this->includeAppInfo;
+        }
+
+        if (isset($this->includeFreeGames)) {
+            $params['include_played_free_games'] = $this->includeFreeGames;
+        }
+
+        if ($this->appIdsFilter) {
+            $params['appids_filter'] = $this->appIdsFilter;
+        }
 
         return $params;
     }
-} 
+}

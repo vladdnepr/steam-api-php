@@ -1,52 +1,56 @@
 <?php
 
-namespace Steam\Command\GameServersService;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\GameServersService;
+
+use SquegTech\Steam\Command\CommandInterface;
 
 class SetMemo implements CommandInterface
 {
     /**
-     * @var int
-     */
-    protected $steamId;
-
-    /**
-     * @var string
-     */
-    protected $memo;
-
-    /**
      * @param int $steamId
      * @param string $memo
      */
-    public function __construct($steamId, $memo)
-    {
-        $this->steamId = (int) $steamId;
-        $this->memo = $memo;
-    }
+    public function __construct(
+        private int $steamId,
+        private string $memo
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IGameServersService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'SetMemo';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'POST';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         return [
             'steamid' => $this->steamId,

@@ -1,32 +1,47 @@
 <?php
 
-namespace Steam\Command\GameServersService;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\GameServersService;
+
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetServerList implements CommandInterface
 {
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IGameServersService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetServerList';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         return [];
     }
