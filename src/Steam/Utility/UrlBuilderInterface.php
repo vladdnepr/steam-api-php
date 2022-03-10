@@ -1,26 +1,26 @@
 <?php
-namespace Steam\Utility;
 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Utility;
+
+use SquegTech\Steam\Command\CommandInterface;
+use GuzzleHttp\Psr7\Uri;
 
 interface UrlBuilderInterface
 {
     /**
      * @param string $baseUrl
-     *
-     * @return self
+     * @return $this
      */
-    public function setBaseUrl($baseUrl);
+    public function setBaseUrl(string $baseUrl): static;
 
     /**
      * @return string
      */
-    public function getBaseUrl();
+    public function getBaseUrl(): string;
 
     /**
      * @param CommandInterface $command
-     *
-     * @return string
+     * @return Uri
      */
-    public function build(CommandInterface $command);
-} 
+    public function build(CommandInterface $command): Uri;
+}

@@ -1,21 +1,21 @@
 <?php
 
-namespace Steam\Utility;
+namespace SquegTech\Steam\Utility;
 
 use GuzzleHttp\Psr7\Uri;
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GuzzleUrlBuilder implements UrlBuilderInterface
 {
     /**
      * @var string
      */
-    protected $baseUrl = '';
+    private string $baseUrl = '';
 
     /**
      * {@inheritdoc}
      */
-    public function setBaseUrl($baseUrl)
+    public function setBaseUrl(string $baseUrl): static
     {
         $this->baseUrl = $baseUrl;
         return $this;
@@ -24,7 +24,7 @@ class GuzzleUrlBuilder implements UrlBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function getBaseUrl()
+    public function getBaseUrl(): string
     {
         return $this->baseUrl;
     }
@@ -32,7 +32,7 @@ class GuzzleUrlBuilder implements UrlBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function build(CommandInterface $command)
+    public function build(CommandInterface $command): Uri
     {
         $uri = sprintf('%s/%s/%s/%s',
             rtrim($this->getBaseUrl()),
