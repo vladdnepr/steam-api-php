@@ -1,120 +1,75 @@
 <?php
 
-namespace Steam\Command\CheatReportingService;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\CheatReportingService;
+
+use DateTime;
+use SquegTech\Steam\Command\CommandInterface;
 
 class ReportCheatData implements CommandInterface
 {
-    /**
-     * @var int
-     */
-    protected $steamId;
-
-    /**
-     * @var int
-     */
-    protected $appId;
-
-    /**
-     * @var string
-     */
-    protected $pathAndFileName;
-
-    /**
-     * @var string
-     */
-    protected $webCheatUrl;
-
-    /**
-     * @var int
-     */
-    protected $timeNow;
-
-    /**
-     * @var int
-     */
-    protected $timeStarted;
-
-    /**
-     * @var int
-     */
-    protected $timeStopped;
-
-    /**
-     * @var string
-     */
-    protected $cheatName;
-
-    /**
-     * @var int
-     */
-    protected $gameProcessId;
-
-    /**
-     * @var int
-     */
-    protected $cheatProcessId;
-
     /**
      * @param int $steamId
      * @param int $appId
      * @param string $pathAndFileName
      * @param string $webCheatUrl
-     * @param \DateTime $timeNow
-     * @param \DateTime $timeStarted
-     * @param \DateTime $timeStopped
+     * @param DateTime $timeNow
+     * @param DateTime $timeStarted
+     * @param DateTime $timeStopped
      * @param string $cheatName
      * @param int $gameProcessId
      * @param int $cheatProcessId
      */
     public function __construct(
-        $steamId,
-        $appId,
-        $pathAndFileName,
-        $webCheatUrl,
-        $timeNow,
-        $timeStarted,
-        $timeStopped,
-        $cheatName,
-        $gameProcessId,
-        $cheatProcessId
-    ) {
-        $this->steamId = $steamId;
-        $this->appId = $appId;
-        $this->pathAndFileName = $pathAndFileName;
-        $this->webCheatUrl = $webCheatUrl;
-        $this->timeNow = $timeNow;
-        $this->timeStarted = $timeStarted;
-        $this->timeStopped = $timeStopped;
-        $this->cheatName = $cheatName;
-        $this->gameProcessId = $gameProcessId;
-        $this->cheatProcessId = $cheatProcessId;
-    }
+        private int $steamId,
+        private int $appId,
+        private string $pathAndFileName,
+        private string $webCheatUrl,
+        private DateTime $timeNow,
+        private DateTime $timeStarted,
+        private DateTime $timeStopped,
+        private string $cheatName,
+        private int $gameProcessId,
+        private int $cheatProcessId
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IAccountRecoveryService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'ReportAccountRecoveryData';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'POST';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
-        $params = [
+        return [
             'steamid' => $this->steamId,
             'appid' => $this->appId,
             'pathandfilename' => $this->pathAndFileName,
@@ -126,7 +81,5 @@ class ReportCheatData implements CommandInterface
             'game_process_id' => $this->gameProcessId,
             'cheat_process_id' => $this->cheatProcessId,
         ];
-
-        return $params;
     }
 }
