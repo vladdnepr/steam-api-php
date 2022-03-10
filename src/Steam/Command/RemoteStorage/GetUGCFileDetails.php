@@ -1,72 +1,80 @@
 <?php
 
-namespace Steam\Command\RemoteStorage;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\RemoteStorage;
+
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetUGCFileDetails implements CommandInterface
 {
     /**
      * @var int
      */
-    protected $appId;
-
-    /**
-     * @var int
-     */
-    protected $steamId;
-
-    /**
-     * @var int
-     */
-    protected $ugcId;
+    private int $steamId;
 
     /**
      * @param int $appId
      * @param int $ugcId
      */
-    public function __construct($appId, $ugcId)
-    {
-        $this->appId = $appId;
-        $this->ugcId = $ugcId;
-    }
+    public function __construct(
+        private int $appId,
+        private int $ugcId
+    ) {}
 
     /**
      * @param int $steamId
+     * @return $this
      */
-    public function setSteamId($steamId)
+    public function setSteamId(int $steamId): static
     {
         $this->steamId = $steamId;
+        return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'ISteamRemoteStorage';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetUGCFileDetails';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [
             'appid' => $this->appId,
             'ugcid' => $this->ugcId,
         ];
 
-        empty($this->steamId) ?: $params['steamid'] = $this->steamId;
+        if (isset($this->steamId)) {
+            $params['steamid'] = $this->steamId;
+        }
 
         return $params;
     }

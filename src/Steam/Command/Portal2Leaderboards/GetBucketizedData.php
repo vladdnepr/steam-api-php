@@ -1,48 +1,57 @@
 <?php
 
-namespace Steam\Command\Portal2Leaderboards;
- 
-use Steam\Command\CommandInterface;
-use Steam\Traits\Portal2CommandTrait;
+namespace SquegTech\Steam\Command\Portal2Leaderboards;
+
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Traits\Portal2CommandTrait;
 
 class GetBucketizedData implements CommandInterface
 {
     use Portal2CommandTrait;
 
     /**
-     * @var string
-     */
-    protected $leaderboardName;
-
-    /**
      * @param string $leaderboardName
      */
-    public function __construct($leaderboardName)
+    public function __construct(
+        private string $leaderboardName
+    ) {}
+
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
-        $this->leaderboardName = $leaderboardName;
+        return 'IPortal2Leaderboards_' . $this->getPortal2AppId()->value;
     }
 
-    public function getInterface()
-    {
-        return 'IPortal2Leaderboards_' . $this->getPortal2AppId();
-    }
-
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetBucketizedData';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return string[]
+     */
+    public function getParams(): array
     {
         return [
             'leaderboardName' => $this->leaderboardName,

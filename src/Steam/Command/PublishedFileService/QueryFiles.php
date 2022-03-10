@@ -1,247 +1,242 @@
 <?php
 
-namespace Steam\Command\PublishedFileService;
+namespace SquegTech\Steam\Command\PublishedFileService;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Enums\EPublishedFileQueryType;
 
 class QueryFiles implements CommandInterface
 {
     /**
-     * enumeration EPublishedFileQueryType in clientenums.h.
+     * enumeration EPublishedFileQueryType in clientenums.h of the SDK.
      *
-     * @var int
+     * @var EPublishedFileQueryType
      */
-    protected $queryType;
+    private EPublishedFileQueryType $queryType;
 
     /**
      * Current page
      *
      * @var int
      */
-    protected $page = 1;
+    private int $page = 1;
 
     /**
      * The number of results, per page to return.
      *
      * @var int
      */
-    protected $numberPage = 10;
+    private int $numberPage = 10;
 
     /**
      * App that created the files.
      *
      * @var int
      */
-    protected $creatorAppId;
+    private int $creatorAppId;
 
     /**
      * App that consumes the files.
      *
      * @var int
      */
-    protected $appId;
+    private int $appId;
 
     /**
      * Tags to match on. See matchAllTags property.
      *
      * @var array
      */
-    protected $requiredTags;
+    private array $requiredTags;
 
     /**
      * Tags that must NOT be present on a published file to satisfy the query.
      *
      * @var array
      */
-    protected $excludedTags;
+    private array $excludedTags;
 
     /**
      * If true, then items must have all the tags specified, otherwise they must have at least one of the tags.
      *
      * @var bool
      */
-    protected $matchAllTags = true;
+    private bool $matchAllTags = true;
 
     /**
      * Required flags that must be set on any returned items.
      *
      * @var array
      */
-    protected $requiredFlags;
+    private array $requiredFlags;
 
     /**
      * Flags that must not be set on any returned items.
      *
      * @var array
      */
-    protected $omittedFlags;
+    private array $omittedFlags;
 
     /**
      * Text to match in the item's title or description.
      *
      * @var string
      */
-    protected $searchText;
+    private string $searchText;
 
     /**
      * EPublishedFileInfoMatchingFileType.
-     *
+     * TODO: find this enum and add it.
      * @var int
      */
-    protected $fileType;
+    private $fileType;
 
     /**
      * Find all items that reference the given item.
      *
      * @var int
      */
-    protected $childPublishedFileId;
+    private int $childPublishedFileId;
 
     /**
      * If query_type is k_PublishedFileQueryType_RankedByTrend, then this is the number of days to get votes for [1,7].
      *
      * @var int
      */
-    protected $days;
+    private int $days;
 
     /**
      * If query_type is k_PublishedFileQueryType_RankedByTrend, then limit result set just to items that have votes within the day range given.
      *
      * @var bool
      */
-    protected $includeRecentVotesOnly = false;
+    private bool $includeRecentVotesOnly = false;
 
     /**
      * Allow stale data to be returned for the specified number of seconds.
      *
      * @var int
      */
-    protected $cacheMaxAgeSeconds = 0;
+    private int $cacheMaxAgeSeconds = 0;
 
     /**
      * If true, only return the total number of files that satisfy this query.
      *
      * @var bool
      */
-    protected $totalOnly = false;
+    private bool $totalOnly = false;
 
     /**
      * Return vote data.
      *
      * @var bool
      */
-    protected $returnVoteData = false;
+    private bool $returnVoteData = false;
 
     /**
      * Return tags in the file details.
      *
      * @var bool
      */
-    protected $returnTags = false;
+    private bool $returnTags = false;
 
     /**
      * Return key-value tags in the file details.
      *
      * @var bool
      */
-    protected $returnKvTags = false;
+    private bool $returnKvTags = false;
 
     /**
      * Return preview image and video details in the file details.
      *
      * @var bool
      */
-    protected $returnPreviews = false;
+    private bool $returnPreviews = false;
 
     /**
      * Return child item ids in the file details.
      *
      * @var bool
      */
-    protected $returnChildren = false;
+    private bool $returnChildren = false;
 
     /**
      * Populate the short_description field instead of file_description.
      *
      * @var bool
      */
-    protected $returnShortDescription = false;
+    private bool $returnShortDescription = false;
 
     /**
      * Return pricing information, if applicable.
      *
      * @var bool
      */
-    protected $returnForSaleData = false;
+    private bool $returnForSaleData = false;
 
     /**
      * Populate the metadata.
      *
      * @var bool
      */
-    protected $returnMetadata = false;
+    private bool $returnMetadata = false;
 
     /**
-     * @param int $queryType
-     *
-     * @return self
+     * @param EPublishedFileQueryType $queryType
+     * @return $this
      */
-    public function setQueryType($queryType)
+    public function setQueryType(EPublishedFileQueryType $queryType): static
     {
-        $this->queryType = (int) $queryType;
+        $this->queryType = $queryType;
         return $this;
     }
 
     /**
      * @param int $page
-     *
-     * @return self
+     * @return $this
      */
-    public function setPage($page)
+    public function setPage(int $page): static
     {
-        $this->page = (int) $page;
+        $this->page = $page;
         return $this;
     }
 
     /**
      * @param int $numberPage
-     *
-     * @return self
+     * @return $this
      */
-    public function setNumberPage($numberPage)
+    public function setNumberPage(int $numberPage): static
     {
-        $this->numberPage = (int) $numberPage;
+        $this->numberPage = $numberPage;
         return $this;
     }
 
     /**
      * @param int $creatorAppId
-     *
-     * @return self
+     * @return $this
      */
-    public function setCreatorAppId($creatorAppId)
+    public function setCreatorAppId(int $creatorAppId): static
     {
-        $this->creatorAppId = (int) $creatorAppId;
+        $this->creatorAppId = $creatorAppId;
         return $this;
     }
 
     /**
      * @param int $appId
-     *
-     * @return self
+     * @return $this
      */
-    public function setAppId($appId)
+    public function setAppId(int $appId): static
     {
-        $this->appId = (int) $appId;
+        $this->appId = $appId;
         return $this;
     }
 
     /**
      * @param array $requiredTags
-     *
-     * @return self
+     * @return $this
      */
-    public function setRequiredTags(array $requiredTags)
+    public function setRequiredTags(array $requiredTags): static
     {
         $this->requiredTags = $requiredTags;
         return $this;
@@ -249,32 +244,29 @@ class QueryFiles implements CommandInterface
 
     /**
      * @param array $excludedTags
-     *
-     * @return self
+     * @return $this
      */
-    public function setExcludedTags(array $excludedTags)
+    public function setExcludedTags(array $excludedTags): static
     {
         $this->excludedTags = $excludedTags;
         return $this;
     }
 
     /**
-     * @param boolean $matchAllTags
-     *
-     * @return self
+     * @param $matchAllTags
+     * @return $this
      */
-    public function setMatchAllTags($matchAllTags)
+    public function setMatchAllTags(bool $matchAllTags): static
     {
-        $this->matchAllTags = (bool) $matchAllTags;
+        $this->matchAllTags = $matchAllTags;
         return $this;
     }
 
     /**
      * @param array $requiredFlags
-     *
-     * @return self
+     * @return $this
      */
-    public function setRequiredFlags(array $requiredFlags)
+    public function setRequiredFlags(array $requiredFlags): static
     {
         $this->requiredFlags = $requiredFlags;
         return $this;
@@ -282,10 +274,9 @@ class QueryFiles implements CommandInterface
 
     /**
      * @param array $omittedFlags
-     *
-     * @return self
+     * @return $this
      */
-    public function setOmittedFlags(array $omittedFlags)
+    public function setOmittedFlags(array $omittedFlags): static
     {
         $this->omittedFlags = $omittedFlags;
         return $this;
@@ -293,190 +284,191 @@ class QueryFiles implements CommandInterface
 
     /**
      * @param string $searchText
-     *
-     * @return self
+     * @return $this
      */
-    public function setSearchText($searchText)
+    public function setSearchText(string $searchText): static
     {
         $this->searchText = $searchText;
         return $this;
     }
 
     /**
+     * TODO: update this for enum when it's added.
      * @param int $fileType
-     *
-     * @return self
+     * @return $this
      */
-    public function setFileType($fileType)
+    public function setFileType(int $fileType): static
     {
-        $this->fileType = (int) $fileType;
+        $this->fileType = $fileType;
         return $this;
     }
 
     /**
      * @param int $childPublishedFileId
-     *
-     * @return self
+     * @return $this
      */
-    public function setChildPublishedFileId($childPublishedFileId)
+    public function setChildPublishedFileId(int $childPublishedFileId): static
     {
-        $this->childPublishedFileId = (int) $childPublishedFileId;
+        $this->childPublishedFileId = $childPublishedFileId;
         return $this;
     }
 
     /**
      * @param int $days
-     *
-     * @return self
+     * @return $this
      */
-    public function setDays($days)
+    public function setDays(int $days): static
     {
-        $this->days = (int) $days;
+        $this->days = $days;
         return $this;
     }
 
     /**
-     * @param boolean $includeRecentVotesOnly
-     *
-     * @return self
+     * @param bool $includeRecentVotesOnly
+     * @return $this
      */
-    public function setIncludeRecentVotesOnly($includeRecentVotesOnly)
+    public function setIncludeRecentVotesOnly(bool $includeRecentVotesOnly): static
     {
-        $this->includeRecentVotesOnly = (bool) $includeRecentVotesOnly;
+        $this->includeRecentVotesOnly = $includeRecentVotesOnly;
         return $this;
     }
 
     /**
      * @param int $cacheMaxAgeSeconds
-     *
-     * @return self
+     * @return $this
      */
-    public function setCacheMaxAgeSeconds($cacheMaxAgeSeconds)
+    public function setCacheMaxAgeSeconds(int $cacheMaxAgeSeconds): static
     {
-        $this->cacheMaxAgeSeconds = (int) $cacheMaxAgeSeconds;
+        $this->cacheMaxAgeSeconds = $cacheMaxAgeSeconds;
         return $this;
     }
 
     /**
-     * @param boolean $totalOnly
-     *
-     * @return self
+     * @param bool $totalOnly
+     * @return $this
      */
-    public function setTotalOnly($totalOnly)
+    public function setTotalOnly(bool $totalOnly): static
     {
-        $this->totalOnly = (bool) $totalOnly;
+        $this->totalOnly = $totalOnly;
         return $this;
     }
 
     /**
-     * @param boolean $returnVoteData
-     *
-     * @return self
+     * @param bool $returnVoteData
+     * @return $this
      */
-    public function setReturnVoteData($returnVoteData)
+    public function setReturnVoteData(bool $returnVoteData): static
     {
-        $this->returnVoteData = (bool) $returnVoteData;
+        $this->returnVoteData = $returnVoteData;
         return $this;
     }
 
     /**
-     * @param boolean $returnTags
-     *
-     * @return self
+     * @param bool $returnTags
+     * @return $this
      */
-    public function setReturnTags($returnTags)
+    public function setReturnTags(bool $returnTags): static
     {
-        $this->returnTags = (bool) $returnTags;
+        $this->returnTags = $returnTags;
         return $this;
     }
 
     /**
-     * @param boolean $returnKvTags
-     *
-     * @return self
+     * @param bool $returnKvTags
+     * @return $this
      */
-    public function setReturnKvTags($returnKvTags)
+    public function setReturnKvTags(bool $returnKvTags): static
     {
-        $this->returnKvTags = (bool) $returnKvTags;
+        $this->returnKvTags = $returnKvTags;
         return $this;
     }
 
     /**
-     * @param boolean $returnPreviews
-     *
-     * @return self
+     * @param bool $returnPreviews
+     * @return $this
      */
-    public function setReturnPreviews($returnPreviews)
+    public function setReturnPreviews(bool $returnPreviews): static
     {
-        $this->returnPreviews = (bool) $returnPreviews;
+        $this->returnPreviews = $returnPreviews;
         return $this;
     }
 
     /**
-     * @param boolean $returnChildren
-     *
-     * @return self
+     * @param bool $returnChildren
+     * @return $this
      */
-    public function setReturnChildren($returnChildren)
+    public function setReturnChildren(bool $returnChildren): static
     {
-        $this->returnChildren = (bool) $returnChildren;
+        $this->returnChildren = $returnChildren;
         return $this;
     }
 
     /**
-     * @param boolean $returnShortDescription
-     *
-     * @return self
+     * @param bool $returnShortDescription
+     * @return $this
      */
-    public function setReturnShortDescription($returnShortDescription)
+    public function setReturnShortDescription(bool $returnShortDescription): static
     {
-        $this->returnShortDescription = (bool) $returnShortDescription;
+        $this->returnShortDescription = $returnShortDescription;
         return $this;
     }
 
     /**
-     * @param boolean $returnForSaleData
-     *
-     * @return self
+     * @param bool $returnForSaleData
+     * @return $this
      */
-    public function setReturnForSaleData($returnForSaleData)
+    public function setReturnForSaleData(bool $returnForSaleData): static
     {
-        $this->returnForSaleData = (bool) $returnForSaleData;
+        $this->returnForSaleData = $returnForSaleData;
         return $this;
     }
 
     /**
-     * @param boolean $returnMetadata
-     *
-     * @return self
+     * @param bool $returnMetadata
+     * @return $this
      */
-    public function setReturnMetadata($returnMetadata)
+    public function setReturnMetadata(bool $returnMetadata): static
     {
-        $this->returnMetadata = (bool) $returnMetadata;
+        $this->returnMetadata = $returnMetadata;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IPublishedFileService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'QueryFiles';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [
             'page' => $this->page,
@@ -495,17 +487,49 @@ class QueryFiles implements CommandInterface
             'return_metadata' => $this->returnMetadata,
         ];
 
-        empty($this->queryType) ?: $params['query_type'] = $this->queryType;
-        empty($this->creatorAppId) ?: $params['creator_appid'] = $this->creatorAppId;
-        empty($this->appId) ?: $params['appid'] = $this->appId;
-        empty($this->requiredTags) ?: $params['requiredtags'] = implode(',', $this->requiredTags);
-        empty($this->excludedTags) ?: $params['excludedtags'] = implode(',', $this->excludedTags);
-        empty($this->requiredFlags) ?: $params['required_flags'] = implode(',', $this->requiredFlags);
-        empty($this->omittedFlags) ?: $params['omitted_flags'] = implode(',', $this->omittedFlags);
-        empty($this->searchText) ?: $params['search_text'] = $this->searchText;
-        empty($this->fileType) ?: $params['filetype'] = $this->fileType;
-        empty($this->childPublishedFileId) ?: $params['child_publishedfileid'] = $this->childPublishedFileId;
-        empty($this->days) ?: $params['days'] = $this->days;
+        if (isset($this->queryType)) {
+            $params['query_type'] = $this->queryType->value;
+        }
+
+        if (isset($this->creatorAppId)) {
+            $params['creator_appid'] = $this->creatorAppId;
+        }
+
+        if (isset($this->appId)) {
+            $params['appid'] = $this->appId;
+        }
+
+        if (isset($this->requiredTags)) {
+            $params['requiredtags'] = implode(',', $this->requiredTags);
+        }
+
+        if (isset($this->excludedTags)) {
+            $params['excludedtags'] = implode(',', $this->excludedTags);
+        }
+
+        if (isset($this->requiredFlags)) {
+            $params['required_flags'] = implode(',', $this->requiredFlags);
+        }
+
+        if (isset($this->omittedFlags)) {
+            $params['omitted_flags'] = implode(',', $this->omittedFlags);
+        }
+
+        if (isset($this->searchText)) {
+            $params['search_text'] = $this->searchText;
+        }
+
+        if (isset($this->fileType)) {
+            $params['filetype'] = $this->fileType;
+        }
+
+        if (isset($this->childPublishedFileId)) {
+            $params['child_publishedfileid'] = $this->childPublishedFileId;
+        }
+
+        if (isset($this->days)) {
+            $params['days'] = $this->days;
+        }
 
         return $params;
     }
