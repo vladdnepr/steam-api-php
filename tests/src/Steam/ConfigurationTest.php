@@ -1,23 +1,28 @@
 <?php
-namespace Steam;
+namespace SquegTech\Steam\Tests;
 
-class ConfigurationTest extends \PHPUnit_Framework_TestCase 
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Configuration;
+use SquegTech\Steam\Exception\InvalidConfigOptionException;
+use SquegTech\Steam\Steam;
+
+class ConfigurationTest extends TestCase
 {
     /**
      * @var Configuration
      */
-    protected $configuration;
-    
-    public function setUp()
+    private Configuration $configuration;
+
+    public function setUp(): void
     {
         $this->configuration = new Configuration();
     }
-    
+
     public function testSetSteamKey()
     {
         $steamKey = '123';
 
-        $this->assertInstanceOf('\Steam\Configuration', $this->configuration->setSteamKey($steamKey));
+        $this->assertInstanceOf(Configuration::class, $this->configuration->setSteamKey($steamKey));
     }
 
     public function testGetSteamKey()
@@ -31,27 +36,27 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
     public function testGetBaseSteamApiUrl()
     {
-        $steamBaseUrl = 'http://api.steampowered.com';
-
-        $this->assertEquals($steamBaseUrl, $this->configuration->getBaseSteamApiUrl());
+        $this->assertEquals(Steam::BASE_URL, $this->configuration->getBaseSteamApiUrl());
     }
 
-    /**
-     * @expectedException \Steam\Exception\InvalidConfigOptionException
-     */
     public function testSetOptionsExpectException()
     {
-        $options = array('soft-kitty-warm-kitty-little-ball-of-fur' => true);
+        $options = [
+            'soft-kitty-warm-kitty-little-ball-of-fur' => true
+        ];
         $this->configuration = new Configuration();
+
+        $this->expectException(InvalidConfigOptionException::class);
+
         $this->configuration->setOptions($options);
     }
 
     public function testSetOptionsWithValidOptions()
     {
         $key = 'steam-api-key';
-        $options = array(
+        $options = [
             Configuration::STEAM_KEY => $key
-        );
+        ];
 
         $this->configuration->setOptions($options);
 

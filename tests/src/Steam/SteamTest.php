@@ -1,22 +1,27 @@
 <?php
 
-namespace Steam;
+namespace SquegTech\Steam\Tests;
 
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Runner\RunnerInterface;
+use SquegTech\Steam\Steam;
+use SquegTech\Steam\Configuration;
 
-class SteamTest extends \PHPUnit_Framework_TestCase
+class SteamTest extends TestCase
 {
     /**
      * @var Steam
      */
-    protected $instance;
+    private Steam $instance;
 
     /**
      * @var Configuration
      */
-    protected $config;
+    private Configuration $config;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->config = new Configuration();
         $this->instance = new Steam($this->config);
@@ -24,11 +29,11 @@ class SteamTest extends \PHPUnit_Framework_TestCase
 
     public function testAddingOneRunner()
     {
-        $commandMock = M::mock('Steam\Command\CommandInterface');
+        $commandMock = M::mock(CommandInterface::class);
 
         $result = 'called';
 
-        $runnerMock = M::mock('Steam\Runner\RunnerInterface');
+        $runnerMock = M::mock(RunnerInterface::class);
         $runnerMock->shouldReceive('setConfig')->with($this->config)->andReturnSelf()->once();
         $runnerMock->shouldReceive('run')->with($commandMock, null)->andReturn($result)->once();
 
@@ -39,11 +44,11 @@ class SteamTest extends \PHPUnit_Framework_TestCase
 
     public function testAddingOneRunnerFromArray()
     {
-        $commandMock = M::mock('Steam\Command\CommandInterface');
+        $commandMock = M::mock(CommandInterface::class);
 
         $result = 'called';
 
-        $runnerMock = M::mock('Steam\Runner\RunnerInterface');
+        $runnerMock = M::mock(RunnerInterface::class);
         $runnerMock->shouldReceive('setConfig')->with($this->config)->andReturnSelf()->once();
         $runnerMock->shouldReceive('run')->with($commandMock, null)->andReturn($result)->once();
 
@@ -54,16 +59,16 @@ class SteamTest extends \PHPUnit_Framework_TestCase
 
     public function testAddingTwoRunners()
     {
-        $commandMock = M::mock('Steam\Command\CommandInterface');
+        $commandMock = M::mock(CommandInterface::class);
 
         $resultOne = 'called';
         $resultTwo = 'called second';
 
-        $runnerMockOne = M::mock('Steam\Runner\RunnerInterface');
+        $runnerMockOne = M::mock(RunnerInterface::class);
         $runnerMockOne->shouldReceive('setConfig')->with($this->config)->andReturnSelf()->once();
         $runnerMockOne->shouldReceive('run')->with($commandMock, null)->andReturn($resultOne)->once();
 
-        $runnerMockTwo = M::mock('Steam\Runner\RunnerInterface');
+        $runnerMockTwo = M::mock(RunnerInterface::class);
         $runnerMockTwo->shouldReceive('setConfig')->with($this->config)->andReturnSelf()->once();
         $runnerMockTwo->shouldReceive('run')->with($commandMock, $resultOne)->andReturn($resultTwo)->once();
 
@@ -75,16 +80,16 @@ class SteamTest extends \PHPUnit_Framework_TestCase
 
     public function testAddingTwoRunnersFromArray()
     {
-        $commandMock = M::mock('Steam\Command\CommandInterface');
+        $commandMock = M::mock(CommandInterface::class);
 
         $resultOne = 'called';
         $resultTwo = 'called second';
 
-        $runnerMockOne = M::mock('Steam\Runner\RunnerInterface');
+        $runnerMockOne = M::mock(RunnerInterface::class);
         $runnerMockOne->shouldReceive('setConfig')->with($this->config)->andReturnSelf()->once();
         $runnerMockOne->shouldReceive('run')->with($commandMock, null)->andReturn($resultOne)->once();
 
-        $runnerMockTwo = M::mock('Steam\Runner\RunnerInterface');
+        $runnerMockTwo = M::mock(RunnerInterface::class);
         $runnerMockTwo->shouldReceive('setConfig')->with($this->config)->andReturnSelf()->once();
         $runnerMockTwo->shouldReceive('run')->with($commandMock, $resultOne)->andReturn($resultTwo)->once();
 
@@ -101,4 +106,3 @@ class SteamTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($config, $this->instance->getConfig());
     }
 }
- 
