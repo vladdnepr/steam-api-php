@@ -1,90 +1,94 @@
 <?php
 
-namespace Steam\Command\UserStats;
+namespace SquegTech\Steam\Command\UserStats;
 
-use Steam\Command\CommandInterface;
+use DateTime;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetGlobalStatsForGame implements CommandInterface
 {
     /**
      * @var int
      */
-    protected $appId;
+    private int $count;
 
     /**
-     * @var array
+     * @var DateTime
      */
-    protected $statNames;
+    private DateTime $startDate;
 
     /**
-     * @var int
+     * @var DateTime
      */
-    protected $count;
-
-    /**
-     * @var \DateTime
-     */
-    protected $startDate;
-
-    /**
-     * @var \DateTime
-     */
-    protected $endDate;
+    private DateTime $endDate;
 
     /**
      * @param int $appId
      * @param array $statNames
      */
-    public function __construct($appId, array $statNames)
-    {
-        $this->appId = $appId;
-        $this->statNames = $statNames;
+    public function __construct(
+        private int $appId,
+        private array $statNames
+    ) {
         $this->count = count($statNames);
     }
 
     /**
-     * @param \DateTime $startDate
-     *
-     * @return self
+     * @param DateTime $startDate
+     * @return $this
      */
-    public function setStartDate($startDate)
+    public function setStartDate(DateTime $startDate): static
     {
         $this->startDate = $startDate;
         return $this;
     }
 
     /**
-     * @param \DateTime $endDate
-     *
-     * @return self
+     * @param DateTime $endDate
+     * @return $this
      */
-    public function setEndDate($endDate)
+    public function setEndDate(DateTime $endDate): static
     {
         $this->endDate = $endDate;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'ISteamUserStats';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetGlobalStatsForGame';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [
             'appid' => $this->appId,
@@ -92,8 +96,13 @@ class GetGlobalStatsForGame implements CommandInterface
             'name' => $this->statNames,
         ];
 
-        empty($this->startDate) ?: $params['startdate'] = $this->startDate->getTimestamp();
-        empty($this->endDate) ?: $params['enddate'] = $this->endDate->getTimestamp();
+        if (isset($this->startDate)) {
+            $params['startdate'] = $this->startDate->getTimestamp();
+        }
+
+        if (isset($this->endDate)) {
+            $params['enddate'] = $this->endDate->getTimestamp();
+        }
 
         return $params;
     }

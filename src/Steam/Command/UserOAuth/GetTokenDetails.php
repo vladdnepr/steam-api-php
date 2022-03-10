@@ -1,45 +1,54 @@
 <?php
 
-namespace Steam\Command\UserOAuth;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\UserOAuth;
+
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetTokenDetails implements CommandInterface
 {
     /**
-     * @var string
-     */
-    protected $accessToken;
-
-    /**
      * @param string $accessToken
      */
-    public function __construct($accessToken)
-    {
-        $this->accessToken = $accessToken;
-    }
+    public function __construct(
+        private string $accessToken
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'ISteamUserOAuth';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetTokenDetails';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return string[]
+     */
+    public function getParams(): array
     {
         return [
             'access_token' => $this->accessToken,

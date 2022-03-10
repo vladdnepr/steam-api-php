@@ -1,63 +1,75 @@
 <?php
 
-namespace Steam\Command\User;
+namespace SquegTech\Steam\Command\User;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetFriendList implements CommandInterface
 {
     /**
-     * @var int
-     */
-    protected $steamId;
-
-    /**
      * @var string
      */
-    protected $relationship;
+    private string $relationship;
 
     /**
      * @param int $steamId
      */
-    public function __construct($steamId)
-    {
-        $this->steamId = $steamId;
-    }
+    public function __construct(
+        private int $steamId
+    ) {}
 
     /**
      * @param string $relationship
+     * @return $this
      */
-    public function setRelationship($relationship)
+    public function setRelationship(string $relationship): static
     {
         $this->relationship = $relationship;
+        return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'ISteamUser';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetFriendList';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    public function getParams(): array
     {
-        $params = ['steamid' => $this->steamId];
+        $params = [
+            'steamid' => $this->steamId
+        ];
 
-        empty($this->relationship) ?: $params['relationship'] = $this->relationship;
+        if (isset($this->relationship)) {
+            $params['relationship'] = $this->relationship;
+        }
 
         return $params;
     }
-} 
+}

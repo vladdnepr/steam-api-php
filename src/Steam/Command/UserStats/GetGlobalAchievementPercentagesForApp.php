@@ -1,45 +1,54 @@
 <?php
 
-namespace Steam\Command\UserStats;
+namespace SquegTech\Steam\Command\UserStats;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetGlobalAchievementPercentagesForApp implements CommandInterface
 {
     /**
-     * @var int
-     */
-    protected $appId;
-
-    /**
      * @param int $appId
      */
-    public function __construct($appId)
-    {
-        $this->appId = $appId;
-    }
+    public function __construct(
+        private int $appId
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'ISteamUserStats';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetGlobalAchievementPercentagesForApp';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v2';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return int[]
+     */
+    public function getParams(): array
     {
         return [
             'gameid' => $this->appId,

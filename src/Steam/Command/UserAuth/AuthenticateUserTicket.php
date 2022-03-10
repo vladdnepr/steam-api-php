@@ -1,52 +1,56 @@
 <?php
 
-namespace Steam\Command\UserAuth;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\UserAuth;
+
+use SquegTech\Steam\Command\CommandInterface;
 
 class AuthenticateUserTicket implements CommandInterface
 {
     /**
-     * @var int
-     */
-    protected $appId;
-
-    /**
-     * @var string
-     */
-    protected $ticket;
-
-    /**
      * @param int $appId
      * @param string $ticket
      */
-    public function __construct($appId, $ticket)
-    {
-        $this->appId = $appId;
-        $this->ticket = $ticket;
-    }
+    public function __construct(
+        private int $appId,
+        private string $ticket
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'ISteamUserAuth';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'AuthenticateUserTicket';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
          return [
             'appid' => $this->appId,

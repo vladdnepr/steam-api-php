@@ -1,67 +1,61 @@
 <?php
 
-namespace Steam\Command\User;
+namespace SquegTech\Steam\Command\User;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Enums\UrlType;
 
 class ResolveVanityUrl implements CommandInterface
 {
-    const INDIVIDUAL_PROFILE = 1;
-    const GROUP = 2;
-    const OFFICIAL_GROUP_NAME = 3;
-
-    /**
-     * @var string
-     */
-    protected $vanityUrl;
-
-    /**
-     * @var int
-     */
-    protected $urlType;
-
     /**
      * @param string $vanityUrl
-     * @param int $urlType
-     *
-     * @throws \InvalidArgumentException
+     * @param UrlType $urlType
      */
-    public function __construct($vanityUrl, $urlType = self::INDIVIDUAL_PROFILE)
-    {
-        $this->vanityUrl = $vanityUrl;
+    public function __construct(
+        private string $vanityUrl,
+        private UrlType $urlType = UrlType::INDIVIDUAL_PROFILE
+    ) {}
 
-        if(!in_array($urlType, [1, 2, 3])) {
-            throw new \InvalidArgumentException('The url type can be only be either 1, 2 or 3');
-        }
-
-        $this->urlType = $urlType;
-    }
-
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'ISteamUser';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'ResolveVanityURL';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams():array
     {
         return [
             'vanityurl' => $this->vanityUrl,
-            'url_type' => $this->urlType,
+            'url_type' => $this->urlType->value,
         ];
     }
-} 
+}

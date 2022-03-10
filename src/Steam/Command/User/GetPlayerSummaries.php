@@ -1,48 +1,57 @@
 <?php
 
-namespace Steam\Command\User;
+namespace SquegTech\Steam\Command\User;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetPlayerSummaries implements CommandInterface
 {
     /**
-     * @var array
-     */
-    protected $steamIds;
-
-    /**
      * @param array $steamIds
      */
-    public function __construct(array $steamIds)
-    {
-        $this->steamIds = $steamIds;
-    }
+    public function __construct(
+        private array $steamIds
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'ISteamUser';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetPlayerSummaries';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v2';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         return [
             'steamids' => implode(',', $this->steamIds)
         ];
     }
-} 
+}

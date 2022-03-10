@@ -1,48 +1,57 @@
 <?php
 
-namespace Steam\Command\User;
+namespace SquegTech\Steam\Command\User;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetUserGroupList implements CommandInterface
 {
     /**
-     * @var int
-     */
-    protected $steamId;
-
-    /**
      * @param int $steamId
      */
-    public function __construct($steamId)
-    {
-        $this->steamId = $steamId;
-    }
+    public function __construct(
+        private int $steamId
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'ISteamUser';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetUserGroupList';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return int[]
+     */
+    public function getParams(): array
     {
         return [
             'steamid' => $this->steamId,
         ];
     }
-} 
+}

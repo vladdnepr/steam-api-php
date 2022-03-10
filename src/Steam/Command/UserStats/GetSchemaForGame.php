@@ -1,68 +1,63 @@
 <?php
 
-namespace Steam\Command\UserStats;
+namespace SquegTech\Steam\Command\UserStats;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\HasLanguage;
 
 class GetSchemaForGame implements CommandInterface
 {
-    /**
-     * @var int
-     */
-    protected $appId;
-
-    /**
-     * @var string
-     */
-    protected $language;
+    use HasLanguage;
 
     /**
      * @param int $appId
      */
-    public function __construct($appId)
-    {
-        $this->appId = $appId;
-    }
+    public function __construct(
+        private int $appId
+    ) {}
 
     /**
-     * @param string $language
-     *
-     * @return self
+     * @return string
      */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-        return $this;
-    }
-
-    public function getInterface()
+    public function getInterface(): string
     {
         return 'ISteamUserStats';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetSchemaForGame';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v2';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    public function getParams(): array
     {
         $params = [
             'appid' => $this->appId,
         ];
 
-        empty($this->language) ?: $params['l'] = $this->language;
+        if (isset($this->language)) {
+            $params['l'] = $this->language;
+        }
 
         return $params;
     }
-} 
+}
