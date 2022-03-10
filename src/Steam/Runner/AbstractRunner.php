@@ -1,22 +1,21 @@
 <?php
 
-namespace Steam\Runner;
+namespace SquegTech\Steam\Runner;
 
-use Steam\Configuration;
+use SquegTech\Steam\Configuration;
 
 abstract class AbstractRunner
 {
     /**
      * @var Configuration
      */
-    protected $config;
+    private Configuration $config;
 
     /**
      * @param Configuration $config
-     *
-     * @return self
+     * @return $this
      */
-    public function setConfig(Configuration $config)
+    public function setConfig(Configuration $config): static
     {
         $this->config = $config;
         return $this;
@@ -25,8 +24,8 @@ abstract class AbstractRunner
     /**
      * @return Configuration
      */
-    public function getConfig()
+    public function getConfig(): Configuration
     {
         return $this->config;
     }
-} 
+}

@@ -1,22 +1,24 @@
 <?php
 
-namespace Steam\Runner;
+namespace SquegTech\Steam\Runner;
 
 use Psr\Http\Message\ResponseInterface;
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
+use InvalidArgumentException;
 
 class DecodeJsonStringRunner extends AbstractRunner implements RunnerInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @param \Psr\Http\Message\ResponseInterface $result
+     * @param CommandInterface $command
+     * @param ResponseInterface|null $result
+     * @return array|bool
      */
-    public function run(CommandInterface $command, $result = null)
+    public function run(CommandInterface $command, ResponseInterface $result = null): array|bool
     {
-        if(!$result instanceof ResponseInterface) {
-            throw new \InvalidArgumentException(
-                'The result needs to be an instance of GuzzleHttp\Message\ResponseInterface');
+        if($result === null) {
+            throw new InvalidArgumentException(
+                'The result needs to be an instance of Psr\Http\Message\ResponseInterface'
+            );
         }
 
         return json_decode($result->getBody()->getContents(), true);

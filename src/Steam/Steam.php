@@ -1,44 +1,37 @@
 <?php
 
-namespace Steam;
+namespace SquegTech\Steam;
 
-use Steam\Command\CommandInterface;
-use Steam\Runner\RunnerInterface;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Runner\RunnerInterface;
 
 class Steam
 {
     /**
      * @var array
      */
-    protected $runners = [];
-
-    /**
-     * @var Configuration
-     */
-    protected $config;
+    private array $runners = [];
 
     /**
      * @param Configuration $config
      */
-    public function __construct(Configuration $config)
-    {
-        $this->config = $config;
-    }
+    public function __construct(
+        private Configuration $config
+    ) {}
 
     /**
      * @return Configuration
      */
-    public function getConfig()
+    public function getConfig(): Configuration
     {
         return $this->config;
     }
 
     /**
      * @param Configuration $config
-     *
-     * @return self
+     * @return static
      */
-    public function setConfig($config)
+    public function setConfig(Configuration $config): static
     {
         $this->config = $config;
         return $this;
@@ -46,10 +39,9 @@ class Steam
 
     /**
      * @param array $runners
-     *
-     * @return self
+     * @return static
      */
-    public function addRunners(array $runners)
+    public function addRunners(array $runners): static
     {
         foreach($runners as $runner) {
             $this->addRunner($runner);
@@ -60,10 +52,9 @@ class Steam
 
     /**
      * @param RunnerInterface $runner
-     *
-     * @return self
+     * @return static
      */
-    public function addRunner(RunnerInterface $runner)
+    public function addRunner(RunnerInterface $runner): static
     {
         $this->runners[] = $runner->setConfig($this->config);
         return $this;
@@ -71,10 +62,9 @@ class Steam
 
     /**
      * @param CommandInterface $command
-     *
      * @return mixed
      */
-    public function run(CommandInterface $command)
+    public function run(CommandInterface $command): mixed
     {
         $result = null;
 

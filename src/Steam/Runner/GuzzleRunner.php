@@ -1,9 +1,9 @@
 <?php
 
-namespace Steam\Runner;
- 
+namespace SquegTech\Steam\Runner;
+
 use Psr\Http\Message\ResponseInterface;
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GuzzleRunner extends GuzzleAsyncRunner
 {
@@ -12,7 +12,7 @@ class GuzzleRunner extends GuzzleAsyncRunner
      *
      * @return ResponseInterface
      */
-    public function run(CommandInterface $command, $result = null)
+    public function run(CommandInterface $command, $result = null): ResponseInterface
     {
         return parent::run($command, $result)->wait();
     }

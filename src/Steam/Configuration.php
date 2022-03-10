@@ -1,67 +1,70 @@
 <?php
 
-namespace Steam;
+namespace SquegTech\Steam;
 
-use Steam\Exception\InvalidConfigOptionException;
+use SquegTech\Steam\Exception\InvalidConfigOptionException;
 
 class Configuration
 {
-    const STEAM_KEY = 'steam_key';
-    const BASE_STEAM_API_URL = 'base_steam_api_url';
+    public const STEAM_KEY = 'steam_key';
+    public const BASE_STEAM_API_URL = 'base_steam_api_url';
 
     /**
      * @var array
      */
-    protected $_options = array(
+    private array $options = [
         self::STEAM_KEY => '',
-        self::BASE_STEAM_API_URL => 'http://api.steampowered.com'
-    );
+        self::BASE_STEAM_API_URL => 'https://api.steampowered.com'
+    ];
 
     /**
      * @param array $options
+     * @throws InvalidConfigOptionException
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         $this->setOptions($options);
     }
 
-    public function setOptions(array $options)
+    /**
+     * @param array $options
+     * @return void
+     * @throws InvalidConfigOptionException
+     */
+    public function setOptions(array $options): void
     {
-        foreach($options as $key => $value)
-        {
-            if(!array_key_exists($key, $this->_options))
-            {
+        foreach($options as $key => $value) {
+            if(!array_key_exists($key, $this->options)) {
                 throw new InvalidConfigOptionException(sprintf('"%s" is an invalid configuration option', $key));
             }
 
-            $this->_options[$key] = $value;
+            $this->options[$key] = $value;
         }
     }
 
     /**
      * @param string $appKey
-     *
-     * @return Configuration
+     * @return $this
      */
-    public function setSteamKey($appKey)
+    public function setSteamKey(string $appKey): static
     {
-        $this->_options[self::STEAM_KEY] = $appKey;
+        $this->options[self::STEAM_KEY] = $appKey;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getSteamKey()
+    public function getSteamKey(): string
     {
-        return $this->_options[self::STEAM_KEY];
+        return $this->options[self::STEAM_KEY];
     }
 
     /**
      * @return string
      */
-    public function getBaseSteamApiUrl()
+    public function getBaseSteamApiUrl(): string
     {
-        return $this->_options[self::BASE_STEAM_API_URL];
+        return $this->options[self::BASE_STEAM_API_URL];
     }
 }

@@ -1,44 +1,35 @@
 <?php
 
-namespace Steam\Runner;
+namespace SquegTech\Steam\Runner;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
-use Steam\Command\CommandInterface;
-use Steam\Utility\UrlBuilderInterface;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Utility\UrlBuilderInterface;
 
 class GuzzleAsyncRunner extends AbstractRunner implements RunnerInterface
 {
     /**
-     * @var ClientInterface
-     */
-    protected $client;
-
-    /**
-     * @var UrlBuilderInterface
-     */
-    protected $urlBuilder;
-
-    /**
      * @param ClientInterface $client
      * @param UrlBuilderInterface $urlBuilder
      */
-    public function __construct(ClientInterface $client, UrlBuilderInterface $urlBuilder)
-    {
-        $this->client = $client;
-        $this->urlBuilder = $urlBuilder;
-    }
+    public function __construct(
+        private ClientInterface $client,
+        private UrlBuilderInterface $urlBuilder
+    ) {}
 
     /**
      * {@inheritdoc}
      *
      * @return PromiseInterface
      */
-    public function run(CommandInterface $command, $result = null)
+    public function run(CommandInterface $command, $result = null): mixed
     {
         $key = $command->getRequestMethod() === 'GET' ? 'query' : 'body';
-        $options = [$key => []];
+        $options = [
+            $key => []
+        ];
 
         if(!empty($params = $command->getParams())) {
             $options[$key] = array_merge($options[$key], $params);
