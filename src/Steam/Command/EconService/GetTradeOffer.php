@@ -1,61 +1,57 @@
 <?php
 
-namespace Steam\Command\EconService;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\EconService;
+
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\HasLanguage;
 
 class GetTradeOffer implements CommandInterface
 {
-    /**
-     * @var int
-     */
-    protected $tradeOfferId;
+    use HasLanguage;
 
     /**
-     * @var string
+     * @param int $tradeOfferId
      */
-    protected $language;
+    public function __construct(
+        private int $tradeOfferId
+    ) {}
 
     /**
-     * @param string $tradeOfferId
+     * @return string
      */
-    public function __construct($tradeOfferId)
-    {
-        $this->tradeOfferId = $tradeOfferId;
-    }
-
-    /**
-     * @param string $language
-     *
-     * @return self
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-        return $this;
-    }
-
-    public function getInterface()
+    public function getInterface(): string
     {
         return 'IEconService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetTradeOffer';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return int[]
+     */
+    public function getParams(): array
     {
         $params = [
             'tradeofferid' => $this->tradeOfferId,

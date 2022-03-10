@@ -1,50 +1,57 @@
 <?php
 
-namespace Steam\Command\EconService;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\EconService;
+
+use SquegTech\Steam\Command\CommandInterface;
 
 class DeclineTradeOffer implements CommandInterface
 {
     /**
-     * @var int
+     * @param int $tradeOfferId
      */
-    protected $tradeOfferId;
+    public function __construct(
+        private int $tradeOfferId
+    ) {}
 
     /**
-     * @param string $tradeOfferId
+     * @return string
      */
-    public function __construct($tradeOfferId)
-    {
-        $this->tradeOfferId = $tradeOfferId;
-    }
-
-    public function getInterface()
+    public function getInterface(): string
     {
         return 'IEconService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'DeclineTradeOffer';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'POST';
     }
 
-    public function getParams()
+    /**
+     * @return int[]
+     */
+    public function getParams(): array
     {
-        $params = [
+        return [
             'tradeofferid' => $this->tradeOfferId,
         ];
-
-        return $params;
     }
 }

@@ -1,79 +1,69 @@
 <?php
 
-namespace Steam\Command\Economy;
+namespace SquegTech\Steam\Command\Economy;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\HasLanguage;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetAssetPrices implements CommandInterface
 {
-    /**
-     * @var int
-     */
-    protected $appId;
-
-    /**
-     * @var string
-     */
-    protected $currency;
-
-    /**
-     * @var string
-     */
-    protected $language;
+    use HasLanguage;
 
     /**
      * @param int $appId
      * @param string $currency
      */
-    public function __construct($appId, $currency = '')
-    {
-        $this->appId = $appId;
-        $this->currency = $currency;
-    }
-
-    /**
-     * @param string $language
-     *
-     * @return self
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-        return $this;
-    }
+    public function __construct(
+        private int $appId,
+        private string $currency = ''
+    ) {}
 
     /**
      * @param string $currency
-     *
-     * @return self
+     * @return $this
      */
-    public function setCurrency($currency)
+    public function setCurrency(string $currency): static
     {
         $this->currency = $currency;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'ISteamEconomy';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetAssetPrices';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return int[]
+     */
+    public function getParams(): array
     {
         $params = [
             'appid' => $this->appId,
@@ -84,4 +74,4 @@ class GetAssetPrices implements CommandInterface
 
         return $params;
     }
-} 
+}

@@ -1,61 +1,57 @@
 <?php
 
-namespace Steam\Command\EconItems;
+namespace SquegTech\Steam\Command\EconItems;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\HasLanguage;
 
 class GetStoreMetaData implements CommandInterface
 {
-    /**
-     * @var int
-     */
-    protected $appId;
-
-    /**
-     * @var string
-     */
-    protected $language;
+    use HasLanguage;
 
     /**
      * @param int $appId
      */
-    public function __construct($appId)
-    {
-        $this->appId = $appId;
-    }
+    public function __construct(
+        private int $appId
+    ) {}
 
     /**
-     * @param string $language
-     *
-     * @return self
+     * @return string
      */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-        return $this;
-    }
-
-    public function getInterface()
+    public function getInterface(): string
     {
         return 'IEconItems_' . $this->appId;
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetStoreMetaData';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [];
 
@@ -63,4 +59,4 @@ class GetStoreMetaData implements CommandInterface
 
         return $params;
     }
-} 
+}

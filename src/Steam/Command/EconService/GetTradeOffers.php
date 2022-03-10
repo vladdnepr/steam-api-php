@@ -1,38 +1,35 @@
 <?php
 
-namespace Steam\Command\EconService;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\EconService;
+
+use DateTime;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\HasLanguage;
 
 class GetTradeOffers implements CommandInterface
 {
+    use HasLanguage;
+
     /**
      * Request the list of sent offers.
      *
      * @var bool
      */
-    protected $getSentOffers = false;
+    private bool $getSentOffers = false;
 
     /**
      * Request the list of received offers.
      *
      * @var bool
      */
-    protected $getReceivedOffers = false;
+    private bool $getReceivedOffers = false;
 
     /**
      * If set, the item display data for the items included in the returned trade offers will also be returned.
      *
      * @var bool
      */
-    protected $getDescriptions = false;
-
-    /**
-     * The language to use when loading item display data.
-     *
-     * @var string
-     */
-    protected $language;
+    private bool $getDescriptions = false;
 
     /**
      * Indicates we should only return offers which are still active.
@@ -40,120 +37,118 @@ class GetTradeOffers implements CommandInterface
      *
      * @var bool
      */
-    protected $activeOnly = false;
+    private bool $activeOnly = false;
 
     /**
      * Indicates we should only return offers which are not active.
      *
      * @var bool
      */
-    protected $historicalOnly = false;
+    private bool $historicalOnly = false;
 
     /**
      * When active_only is set, offers updated since this time will also be returned
      *
-     * @var \Datetime
+     * @var Datetime
      */
-    protected $timeHistoricalCutoff;
+    private DateTime $timeHistoricalCutoff;
 
     /**
      * @param bool $getSentOffers
-     *
-     * @return self
+     * @return $this
      */
-    public function setGetSentOffers($getSentOffers)
+    public function setGetSentOffers(bool $getSentOffers): static
     {
-        $this->getSentOffers = (bool) $getSentOffers;
+        $this->getSentOffers = $getSentOffers;
         return $this;
     }
 
     /**
      * @param bool $getReceivedOffers
-     *
-     * @return self
+     * @return $this
      */
-    public function setGetReceivedOffers($getReceivedOffers)
+    public function setGetReceivedOffers(bool $getReceivedOffers): static
     {
-        $this->getReceivedOffers = (bool) $getReceivedOffers;
+        $this->getReceivedOffers = $getReceivedOffers;
         return $this;
     }
 
     /**
      * @param bool $getDescriptions
-     *
-     * @return self
+     * @return $this
      */
-    public function setGetDescriptions($getDescriptions)
+    public function setGetDescriptions(bool $getDescriptions): static
     {
-        $this->getDescriptions = (bool) $getDescriptions;
-        return $this;
-    }
-
-    /**
-     * @param string $language
-     *
-     * @return self
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
+        $this->getDescriptions = $getDescriptions;
         return $this;
     }
 
     /**
      * @param bool $activeOnly
-     *
-     * @return self
+     * @return $this
      */
-    public function setActiveOnly($activeOnly)
+    public function setActiveOnly(bool $activeOnly): static
     {
-        $this->activeOnly = (bool) $activeOnly;
+        $this->activeOnly = $activeOnly;
         return $this;
     }
 
     /**
      * @param bool $historicalOnly
-     *
-     * @return self
+     * @return $this
      */
-    public function setHistoricalOnly($historicalOnly)
+    public function setHistoricalOnly(bool $historicalOnly): static
     {
-        $this->historicalOnly = (bool) $historicalOnly;
+        $this->historicalOnly = $historicalOnly;
         return $this;
     }
 
     /**
-     * @param \DateTime $timeHistoricalCutoff
-     *
-     * @return self
+     * @param DateTime $timeHistoricalCutoff
+     * @return $this
      */
-    public function setTimeHistoricalCutoff(\DateTime $timeHistoricalCutoff)
+    public function setTimeHistoricalCutoff(DateTime $timeHistoricalCutoff): static
     {
         $this->timeHistoricalCutoff = $timeHistoricalCutoff;
         return $this;
-    }    
-    
-    public function getInterface()
+    }
+
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IEconService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetTradeOffers';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [
             'get_sent_offers' => $this->getSentOffers,

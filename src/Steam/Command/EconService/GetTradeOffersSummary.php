@@ -1,45 +1,63 @@
 <?php
 
-namespace Steam\Command\EconService;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\EconService;
+
+use DateTime;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetTradeOffersSummary implements CommandInterface
 {
     /**
-     * @var \DateTime
+     * @var DateTime
      */
-    protected $timeLastVisit;
+    private DateTime $timeLastVisit;
 
     /**
-     * @param \DateTime $timeLastVisit
+     * @param DateTime $timeLastVisit
+     * @return $this
      */
-    public function setTimeLastVisit(\DateTime $timeLastVisit)
+    public function setTimeLastVisit(DateTime $timeLastVisit): static
     {
         $this->timeLastVisit = $timeLastVisit;
+        return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IEconService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetTradeOffersSummary';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [];
 

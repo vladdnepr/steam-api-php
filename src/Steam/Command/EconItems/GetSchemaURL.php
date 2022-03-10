@@ -1,46 +1,55 @@
 <?php
 
-namespace Steam\Command\EconItems;
+namespace SquegTech\Steam\Command\EconItems;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetSchemaURL implements CommandInterface
 {
     /**
-     * @var int
-     */
-    protected $appId;
-
-    /**
      * @param int $appId
      */
-    public function __construct($appId)
-    {
-        $this->appId = $appId;
-    }
+    public function __construct(
+        private int $appId
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IEconItems_' . $this->appId;
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetSchemaURL';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         return [];
     }
-} 
+}

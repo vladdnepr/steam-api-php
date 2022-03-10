@@ -1,79 +1,74 @@
 <?php
 
-namespace Steam\Command\EconItems;
+namespace SquegTech\Steam\Command\EconItems;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\HasLanguage;
 
 class GetSchemaItems implements CommandInterface
 {
+    use HasLanguage;
+
     /**
      * @var int
      */
-    protected $appId;
-
-    /**
-     * @var string
-     */
-    protected $language;
-
-    /**
-     * @var string
-     */
-    protected $start;
+    private int $start;
 
     /**
      * @param int $appId
      */
-    public function __construct($appId)
-    {
-        $this->appId = $appId;
-    }
-
-    /**
-     * @param string $language
-     *
-     * @return self
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-        return $this;
-    }
+    public function __construct(
+        private int $appId
+    ) {}
 
     /**
      * The first item id to return. Defaults to 0. Response will indicate next value to query if applicable.
      *
      * @param int $start
-     *
-     * @return self
+     * @return $this
      */
-    public function setStart($start)
+    public function setStart(int $start): static
     {
         $this->start = $start;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IEconItems_' . $this->appId;
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetSchemaItems';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [];
 
@@ -82,4 +77,4 @@ class GetSchemaItems implements CommandInterface
 
         return $params;
     }
-} 
+}

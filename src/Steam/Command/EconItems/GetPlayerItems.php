@@ -1,55 +1,59 @@
 <?php
 
-namespace Steam\Command\EconItems;
+namespace SquegTech\Steam\Command\EconItems;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetPlayerItems implements CommandInterface
 {
     /**
-     * @var int
-     */
-    protected $appId;
-
-    /**
-     * @var int
-     */
-    protected $steamId;
-
-    /**
      * @param int $appId
      * @param int $steamId
      */
-    public function __construct($appId, $steamId)
-    {
-        $this->appId = $appId;
-        $this->steamId = $steamId;
-    }
+    public function __construct(
+        private int $appId,
+        private int $steamId
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IEconItems_' . $this->appId;
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetPlayerItems';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return int[]
+     */
+    public function getParams(): array
     {
         return [
             'steamid' => $this->steamId,
         ];
     }
-} 
+}

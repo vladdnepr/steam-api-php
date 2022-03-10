@@ -1,86 +1,71 @@
 <?php
 
-namespace Steam\Command\Economy;
+namespace SquegTech\Steam\Command\Economy;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\HasLanguage;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetAssetClassInfo implements CommandInterface
 {
-    /**
-     * @var int
-     */
-    protected $appId;
-
-    /**
-     * @var string
-     */
-    protected $language;
-
-    /**
-     * @var array
-     */
-    protected $classIds;
-
-    /**
-     * @var array
-     */
-    protected $instanceIds;
+    use HasLanguage;
 
     /**
      * @param int $appId
      * @param array $classIds
      * @param array $instanceIds
      */
-    public function __construct($appId, array $classIds, array $instanceIds = [])
-    {
-        $this->appId = $appId;
-        $this->classIds = $classIds;
-        $this->instanceIds = $instanceIds;
-    }
-
-    /**
-     * @param string $language
-     *
-     * @return self
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-        return $this;
-    }
+    public function __construct(
+        private int $appId,
+        private array $classIds,
+        private array $instanceIds = []
+    ) {}
 
     /**
      * @param array $instanceIds
-     *
-     * @return self
+     * @return $this
      */
-    public function setInstanceIds(array $instanceIds)
+    public function setInstanceIds(array $instanceIds): static
     {
         $this->instanceIds = $instanceIds;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'ISteamEconomy';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetAssetClassInfo';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [
             'appid' => $this->appId,
@@ -99,4 +84,4 @@ class GetAssetClassInfo implements CommandInterface
 
         return $params;
     }
-} 
+}
