@@ -1,50 +1,57 @@
 <?php
 
-namespace Steam\Command\AccountRecoveryService;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\AccountRecoveryService;
+
+use SquegTech\Steam\Command\CommandInterface;
 
 class RetrieveAccountRecoveryData implements CommandInterface
 {
     /**
-     * @var string
-     */
-    protected $requestHandle;
-
-    /**
      * @param string $requestHandle
      */
-    public function __construct($requestHandle)
-    {
-        $this->requestHandle = $requestHandle;
-    }
+    public function __construct(
+        private string $requestHandle
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IAccountRecoveryService';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'RetrieveAccountRecoveryData';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'POST';
     }
 
-    public function getParams()
+    /**
+     * @return string[]
+     */
+    public function getParams(): array
     {
-        $params = [
+        return [
             'requesthandle' => $this->requestHandle,
         ];
-
-        return $params;
     }
 }

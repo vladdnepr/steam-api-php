@@ -1,56 +1,56 @@
 <?php
 
-namespace Steam\Command\Apps;
+namespace SquegTech\Steam\Command\Apps;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
 
 class UpToDateCheck implements CommandInterface
 {
     /**
-     * AppID of game.
-     *
-     * @var int
+     * @param int $appId AppID of game.
+     * @param int $version The installed version of the game.
      */
-    protected $appId;
+    public function __construct(
+        private int $appId,
+        private int $version
+    ) {}
 
     /**
-     * The installed version of the game.
-     *
-     * @var int
+     * @return string
      */
-    protected $version;
-
-    /**
-     * @param int $appId
-     * @param int $version
-     */
-    public function __construct($appId, $version)
-    {
-        $this->appId = (int) $appId;
-        $this->version = (int) $version;
-    }
-
-    public function getInterface()
+    public function getInterface(): string
     {
         return 'ISteamApps';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'UpToDateCheck';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         return [
             'appId' => $this->appId,

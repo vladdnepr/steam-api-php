@@ -1,45 +1,54 @@
 <?php
 
-namespace Steam\Command\Apps;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\Apps;
+
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetServersAtAddress implements CommandInterface
 {
     /**
-     * @var string
-     */
-    protected $address;
-
-    /**
      * @param string $address
      */
-    public function __construct($address)
-    {
-        $this->address = $address;
-    }
+    public function __construct(
+        private string $address
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'ISteamApps';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetServersAtAddress';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return string[]
+     */
+    public function getParams(): array
     {
         return [
             'addr' => $this->address,
