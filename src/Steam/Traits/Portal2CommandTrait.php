@@ -1,21 +1,29 @@
 <?php
 
-namespace Steam\Traits;
+namespace SquegTech\Steam\Traits;
+
+use SquegTech\Steam\Enums\AppId;
 
 trait Portal2CommandTrait
 {
-    protected $isForBeta = false;
+    /**
+     * @var bool
+     */
+    private bool $isForBeta = false;
 
     /**
      * @param bool $value
      */
-    public function isForBeta($value)
+    public function isForBeta(bool $value): void
     {
-        $this->isForBeta = (bool) $value;
+        $this->isForBeta = $value;
     }
 
-    public function getPortal2AppId()
+    /**
+     * @return AppId
+     */
+    public function getPortal2AppId(): AppId
     {
-        return $this->isForBeta ? 841 : 620;
+        return $this->isForBeta ? AppId::PORTAL_2_BETA_ID : AppId::PORTAL_2_ID;
     }
-} 
+}

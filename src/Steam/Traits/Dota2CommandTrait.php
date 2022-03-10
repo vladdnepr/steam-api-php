@@ -1,21 +1,29 @@
 <?php
 
-namespace Steam\Traits;
+namespace SquegTech\Steam\Traits;
+
+use SquegTech\Steam\Enums\AppId;
 
 trait Dota2CommandTrait
 {
-    protected $isForTestClient = false;
+    /**
+     * @var bool
+     */
+    private bool $isForTestClient = false;
 
     /**
      * @param bool $value
      */
-    public function isForTestClient($value)
+    public function isForTestClient(bool $value): void
     {
-        $this->isForTestClient = (bool) $value;
+        $this->isForTestClient = $value;
     }
 
-    public function getDota2AppId()
+    /**
+     * @return AppId
+     */
+    public function getDota2AppId(): AppId
     {
-        return $this->isForTestClient ? 205790 : 570;
+        return $this->isForTestClient ? AppId::DOTA_2_BETA_TEST : AppId::DOTA_2_ID;
     }
-} 
+}
