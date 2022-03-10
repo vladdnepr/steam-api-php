@@ -1,51 +1,60 @@
 <?php
 
-namespace Steam\Command\Dota2;
+namespace SquegTech\Steam\Command\Dota2;
 
-use Steam\Command\CommandInterface;
-use Steam\Traits\Dota2CommandTrait;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetItemIconPath implements CommandInterface
 {
     use Dota2CommandTrait;
 
     /**
-     * @var string
-     */
-    protected $iconName;
-
-    /**
      * @param string $iconName
      */
-    public function __construct($iconName)
+    public function __construct(
+        private string $iconName
+    ) {}
+
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
-        $this->iconName = $iconName;
+        return 'IEconDOTA2_' . $this->getDota2AppId()->value;
     }
 
-    public function getInterface()
-    {
-        return 'IEconDOTA2_' . $this->getDota2AppId();
-    }
-
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetItemIconPath';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         return [
             'iconname' => $this->iconName,
         ];
     }
-} 
+}

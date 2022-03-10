@@ -1,79 +1,71 @@
 <?php
 
-namespace Steam\Command\Dota2;
+namespace SquegTech\Steam\Command\Dota2;
 
-use Steam\Command\CommandInterface;
-use Steam\Traits\Dota2CommandTrait;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\HasLanguage;
+use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetEventStatsForAccount implements CommandInterface
 {
-    use Dota2CommandTrait;
-
-    /**
-     * @var int
-     */
-    protected $eventId;
-
-    /**
-     * @var int
-     */
-    protected $accountId;
-
-    /**
-     * @var string
-     */
-    protected $language;
+    use Dota2CommandTrait,
+        HasLanguage;
 
     /**
      * @param int $eventId
      * @param int $accountId
      */
-    public function __construct($eventId, $accountId)
+    public function __construct(
+        private int $eventId,
+        private int $accountId
+    ) {}
+
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
-        $this->eventId = (int) $eventId;
-        $this->accountId = (int) $accountId;
+        return 'IEconDOTA2_' . $this->getDota2AppId()->value;
     }
 
     /**
-     * @param string $language
-     *
-     * @return self
+     * @return string
      */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-        return $this;
-    }
-
-    public function getInterface()
-    {
-        return 'IEconDOTA2_' . $this->getDota2AppId();
-    }
-
-    public function getMethod()
+    public function getMethod(): string
     {
         return 'GetEventStatsForAccount';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [
             'eventid' => $this->eventId,
             'accountid' => $this->accountId,
         ];
 
-        empty($this->language) ?: $params['language'] = $this->language;
+        if (isset($this->language)) {
+            $params['language'] = $this->language;
+        }
 
         return $params;
     }
-} 
+}

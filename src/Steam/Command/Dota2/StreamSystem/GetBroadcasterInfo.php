@@ -1,68 +1,75 @@
 <?php
 
-namespace Steam\Command\Dota2\StreamSystem;
+namespace SquegTech\Steam\Command\Dota2\StreamSystem;
 
-use Steam\Command\CommandInterface;
-use Steam\Traits\Dota2CommandTrait;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetBroadcasterInfo implements CommandInterface
 {
     /**
-     * @var int
-     */
-    protected $broadcasterStreamId;
-
-    /**
-     * @var int
-     */
-    protected $leagueId;
-
-    /**
      * @param int $broadcasterStreamId
-     * @param int $leagueId
+     * @param int|null $leagueId
      */
-    public function __construct($broadcasterStreamId, $leagueId = null)
-    {
-        $this->broadcasterStreamId = (int) $broadcasterStreamId;
+    public function __construct(
+        private int $broadcasterStreamId,
+        private int|null $leagueId = null
+    ) {}
 
-        if(!is_null($leagueId)) {
-            $this->setLeagueId($leagueId);
-        }
+    /**
+     * @param int $leagueId
+     * @return $this
+     */
+    public function setLeagueId(int $leagueId): static
+    {
+        $this->leagueId = $leagueId;
     }
 
-    public function setLeagueId($leagueId)
-    {
-        $this->leagueId = (int) $leagueId;
-    }
-
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IDOTA2StreamSystem_570';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetBroadcasterInfo';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [
             'broadcaster_steam_id' => $this->broadcasterStreamId,
         ];
 
-        empty($this->leagueId) ?: $params['league_id'] = $this->leagueId;
+        if (isset($this->leagueId)) {
+            $params['league_id'] = $this->leagueId;
+        }
 
         return $params;
     }
-} 
+}

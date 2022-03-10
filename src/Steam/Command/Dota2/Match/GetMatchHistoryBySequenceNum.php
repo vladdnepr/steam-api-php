@@ -1,9 +1,9 @@
 <?php
 
-namespace Steam\Command\Dota2\Match;
+namespace SquegTech\Steam\Command\Dota2\Match;
 
-use Steam\Command\CommandInterface;
-use Steam\Traits\Dota2CommandTrait;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetMatchHistoryBySequenceNum implements CommandInterface
 {
@@ -12,19 +12,18 @@ class GetMatchHistoryBySequenceNum implements CommandInterface
     /**
      * @var int
      */
-    protected $startAtMatchSeqNum;
+    private int $startAtMatchSeqNum;
 
     /**
      * @var int
      */
-    protected $matchesRequested;
+    private int $matchesRequested;
 
     /**
      * @param int $startAtMatchSeqNum
-     *
-     * @return self
+     * @return $this
      */
-    public function setStartAtMatchSeqNum($startAtMatchSeqNum)
+    public function setStartAtMatchSeqNum(int $startAtMatchSeqNum): static
     {
         $this->startAtMatchSeqNum = $startAtMatchSeqNum;
         return $this;
@@ -32,42 +31,61 @@ class GetMatchHistoryBySequenceNum implements CommandInterface
 
     /**
      * @param int $matchesRequested
-     *
-     * @return self
+     * @return $this
      */
-    public function setMatchesRequested($matchesRequested)
+    public function setMatchesRequested(int $matchesRequested): static
     {
         $this->matchesRequested = $matchesRequested;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
-        return 'IDOTA2Match_' . $this->getDota2AppId();
+        return 'IDOTA2Match_' . $this->getDota2AppId()->value;
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetMatchHistoryBySequenceNum';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [];
 
-        empty($this->startAtMatchSeqNum) ?: $params['start_at_match_seq_num'] = $this->startAtMatchSeqNum;
-        empty($this->matchesRequested) ?: $params['matches_requested'] = $this->matchesRequested;
+        if (isset($this->startAtMatchSeqNum)) {
+            $params['start_at_match_seq_num'] = $this->startAtMatchSeqNum;
+        }
+
+        if (isset($this->matchesRequested)) {
+            $params['matches_requested'] = $this->matchesRequested;
+        }
 
         return $params;
     }
-} 
+}

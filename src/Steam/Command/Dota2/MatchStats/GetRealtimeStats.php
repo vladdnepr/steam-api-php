@@ -1,49 +1,58 @@
 <?php
 
-namespace Steam\Command\Dota2\MatchStats;
+namespace SquegTech\Steam\Command\Dota2\MatchStats;
 
-use Steam\Command\CommandInterface;
-use Steam\Traits\Dota2CommandTrait;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetRealtimeStats implements CommandInterface
 {
     /**
-     * @var int
-     */
-    protected $serverSteamId;
-
-    /**
      * @param int $serverSteamId
      */
-    public function __construct($serverSteamId)
-    {
-        $this->serverSteamId = (int) $serverSteamId;
-    }
+    public function __construct(
+        private int $serverSteamId
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IDOTA2MatchStats_570';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetRealtimeStats';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         return [
             'server_steam_id' => $this->serverSteamId,
         ];
     }
-} 
+}

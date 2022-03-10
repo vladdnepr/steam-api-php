@@ -1,56 +1,59 @@
 <?php
 
-namespace Steam\Command\Dota2;
+namespace SquegTech\Steam\Command\Dota2;
 
-use Steam\Command\CommandInterface;
-use Steam\Traits\Dota2CommandTrait;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\HasLanguage;
+use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetGameItems implements CommandInterface
 {
-    use Dota2CommandTrait;
+    use Dota2CommandTrait,
+        HasLanguage;
 
     /**
-     * @var string
+     * @return string
      */
-    protected $language;
+    public function getInterface(): string
+    {
+        return 'IEconDOTA2_' . $this->getDota2AppId()->value;
+    }
 
     /**
-     * @param string $language
-     *
-     * @return self
+     * @return string
      */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-        return $this;
-    }
-
-    public function getInterface()
-    {
-        return 'IEconDOTA2_' . $this->getDota2AppId();
-    }
-
-    public function getMethod()
+    public function getMethod(): string
     {
         return 'GetGameItems';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [];
 
-        empty($this->language) ?: $params['language'] = $this->language;
+        if (isset($this->language)) {
+            $params['language'] = $this->language;
+        }
 
         return $params;
     }
-} 
+}

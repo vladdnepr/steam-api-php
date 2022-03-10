@@ -1,33 +1,51 @@
 <?php
 
-namespace Steam\Command\Dota2;
+namespace SquegTech\Steam\Command\Dota2;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetEmoticons implements CommandInterface
 {
-    public function getInterface()
+    use Dota2CommandTrait;
+
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
-        return 'IEconDOTA2_570';
+        return 'IEconDOTA2_' . $this->getDota2AppId()->value;
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetEmoticons';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         return [];
     }
-} 
+}

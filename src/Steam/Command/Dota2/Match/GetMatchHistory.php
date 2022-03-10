@@ -1,9 +1,11 @@
 <?php
 
-namespace Steam\Command\Dota2\Match;
+namespace SquegTech\Steam\Command\Dota2\Match;
 
-use Steam\Command\CommandInterface;
-use Steam\Traits\Dota2CommandTrait;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Enums\Dota2GameMode;
+use SquegTech\Steam\Enums\SkillLevel;
+use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetMatchHistory implements CommandInterface
 {
@@ -14,161 +16,141 @@ class GetMatchHistory implements CommandInterface
      *
      * @var int
      */
-    protected $heroId;
+    private int $heroId;
 
     /**
      * Which game mode to return matches for.
      *
-     * @var int
+     * @var Dota2GameMode
      */
-    protected $gameMode;
+    private Dota2GameMode $gameMode;
 
     /**
      * The average skill range of the match, these can be [1-3] with lower numbers being lower skill.
      *
      * Ignored if an account ID is specified.
      *
-     * @var int
+     * @var SkillLevel
      */
-    protected $skill;
+    private SkillLevel $skill;
 
     /**
      * Minimum number of human players that must be in a match for it to be returned.
      *
-     * @var string
+     * @var int
      */
-    protected $minPlayers;
+    private int $minPlayers;
 
     /**
      * An account ID to get matches from. This will fail if the user has their match history hidden.
      *
      * @var string
      */
-    protected $accountId;
+    private string $accountId;
 
     /**
      * The league ID to return games from.
      *
-     * @var string
+     * @var int
      */
-    protected $leagueId;
+    private int $leagueId;
 
     /**
      * The minimum match ID to start from
      *
      * @var int
      */
-    protected $startAtMatchId;
+    private int $startAtMatchId;
 
     /**
      * The number of requested matches to return.
      *
-     * @var string
+     * @var int
      */
-    protected $matchesRequested;
+    private int $matchesRequested;
 
     /**
      * Whether or not tournament games should only be returned.
      *
      * @var bool
      */
-    protected $tournamentMatchesOnly;
+    private bool $tournamentMatchesOnly;
 
     /**
      * @param string $accountId
-     *
-     * @return self
+     * @return $this
      */
-    public function setAccountId($accountId)
+    public function setAccountId(string $accountId): static
     {
         $this->accountId = $accountId;
         return $this;
     }
 
     /**
-     * @param int $gameMode
-     *
-     * @return self
+     * @param Dota2GameMode $gameMode
+     * @return $this
      */
-    public function setGameMode($gameMode)
+    public function setGameMode(Dota2GameMode $gameMode): static
     {
-        $gameMode = (int) $gameMode;
-
-        if($gameMode < 0 || $gameMode > 16) {
-            throw new \InvalidArgumentException('Invalid game mode. Must be between 0 and 16');
-        }
-
         $this->gameMode = $gameMode;
         return $this;
     }
 
     /**
      * @param int $heroId
-     *
-     * @return self
+     * @return $this
      */
-    public function setHeroId($heroId)
+    public function setHeroId(int $heroId): static
     {
         $this->heroId = $heroId;
         return $this;
     }
 
     /**
-     * @param int|string $leagueId
-     *
-     * @return self
+     * @param int $leagueId
+     * @return $this
      */
-    public function setLeagueId($leagueId)
+    public function setLeagueId(int $leagueId): static
     {
         $this->leagueId = $leagueId;
         return $this;
     }
 
     /**
-     * @param int|string $matchesRequested
-     *
-     * @return self
+     * @param int $matchesRequested
+     * @return $this
      */
-    public function setMatchesRequested($matchesRequested)
+    public function setMatchesRequested(int $matchesRequested): static
     {
         $this->matchesRequested = $matchesRequested;
         return $this;
     }
 
     /**
-     * @param int|string $minPlayers
-     *
-     * @return self
+     * @param int $minPlayers
+     * @return $this
      */
-    public function setMinPlayers($minPlayers)
+    public function setMinPlayers(int $minPlayers): static
     {
         $this->minPlayers = $minPlayers;
         return $this;
     }
 
     /**
-     * @param int $skill
-     *
-     * @return self
+     * @param SkillLevel $skill
+     * @return $this
      */
-    public function setSkill($skill)
+    public function setSkill(SkillLevel $skill): static
     {
-        $skill = (int) $skill;
-
-        if($skill < 0 || $skill > 3) {
-            throw new \InvalidArgumentException('Invalid skill. Must be between 0 and 3');
-        }
-
         $this->skill = $skill;
         return $this;
     }
 
     /**
      * @param int $startAtMatchId
-     *
-     * @return self
+     * @return $this
      */
-    public function setStartAtMatchId($startAtMatchId)
+    public function setStartAtMatchId(int $startAtMatchId): static
     {
         $this->startAtMatchId = $startAtMatchId;
         return $this;
@@ -176,49 +158,89 @@ class GetMatchHistory implements CommandInterface
 
     /**
      * @param bool $tournamentMatchesOnly
-     *
-     * @return self
+     * @return $this
      */
-    public function setTournamentMatchesOnly($tournamentMatchesOnly)
+    public function setTournamentMatchesOnly(bool $tournamentMatchesOnly): static
     {
-        $this->tournamentMatchesOnly = (bool) $tournamentMatchesOnly;
+        $this->tournamentMatchesOnly = $tournamentMatchesOnly;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
-        return 'IDOTA2Match_' . $this->getDota2AppId();
+        return 'IDOTA2Match_' . $this->getDota2AppId()->value;
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetMatchHistory';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [];
 
-        empty($this->heroId) ?: $params['hero_id'] = $this->heroId;
-        empty($this->gameMode) ?: $params['game_mode'] = $this->gameMode;
-        empty($this->skill) ?: $params['skill'] = $this->skill;
-        empty($this->minPlayers) ?: $params['min_players'] = $this->minPlayers;
-        empty($this->accountId) ?: $params['account_id'] = $this->accountId;
-        empty($this->leagueId) ?: $params['league_id'] = $this->leagueId;
-        empty($this->startAtMatchId) ?: $params['start_at_match_id'] = $this->startAtMatchId;
-        empty($this->matchesRequested) ?: $params['matches_requested'] = $this->matchesRequested;
-        is_null($this->tournamentMatchesOnly) ?: $params['tournament_games_only'] = $this->tournamentMatchesOnly;
+        if (isset($this->heroId)) {
+            $params['hero_id'] = $this->heroId;
+        }
+
+        if (isset($this->gameMode)) {
+            $params['game_mode'] = $this->gameMode->value;
+        }
+
+        if (isset($this->skill)) {
+            $params['skill'] = $this->skill->value;
+        }
+
+        if (isset($this->minPlayers)) {
+            $params['min_players'] = $this->minPlayers;
+        }
+
+        if (isset($this->accountId)) {
+            $params['account_id'] = $this->accountId;
+        }
+
+        if (isset($this->leagueId)) {
+            $params['league_id'] = $this->leagueId;
+        }
+
+        if (isset($this->startAtMatchId)) {
+            $params['start_at_match_id'] = $this->startAtMatchId;
+        }
+
+        if (isset($this->matchesRequested)) {
+            $params['matches_requested'] = $this->matchesRequested;
+        }
+
+        if (isset($this->tournamentMatchesOnly)) {
+            $params['tournament_games_only'] = $this->tournamentMatchesOnly;
+        }
 
         return $params;
     }
-} 
+}

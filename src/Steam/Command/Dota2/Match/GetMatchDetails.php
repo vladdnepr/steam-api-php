@@ -1,51 +1,60 @@
 <?php
 
-namespace Steam\Command\Dota2\Match;
+namespace SquegTech\Steam\Command\Dota2\Match;
 
-use Steam\Command\CommandInterface;
-use Steam\Traits\Dota2CommandTrait;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetMatchDetails implements CommandInterface
 {
     use Dota2CommandTrait;
 
     /**
-     * @var int
-     */
-    protected $matchId;
-
-    /**
      * @param int $matchId
      */
-    public function __construct($matchId)
+    public function __construct(
+        private int $matchId
+    ) {}
+
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
-        $this->matchId = (int) $matchId;
+        return 'IDOTA2Match_' . $this->getDota2AppId()->value;
     }
 
-    public function getInterface()
-    {
-        return 'IDOTA2Match_' . $this->getDota2AppId();
-    }
-
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetMatchDetails';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         return [
             'match_id' => $this->matchId,
         ];
     }
-} 
+}

@@ -1,9 +1,9 @@
 <?php
 
-namespace Steam\Command\Dota2;
+namespace SquegTech\Steam\Command\Dota2;
 
-use Steam\Command\CommandInterface;
-use Steam\Traits\Dota2CommandTrait;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetHeroes implements CommandInterface
 {
@@ -12,62 +12,63 @@ class GetHeroes implements CommandInterface
     /**
      * @var bool
      */
-    protected $itemizedHeroesOnly = false;
-
-    /**
-     * @var string
-     */
-    protected $language;
-
-    /**
-     * @param string $language
-     *
-     * @return self
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-        return $this;
-    }
+    private bool $itemizedHeroesOnly = false;
 
     /**
      * @param bool $itemizedHeroesOnly
-     *
-     * @return self
+     * @return $this
      */
-    public function setItemizedHeroesOnly($itemizedHeroesOnly)
+    public function setItemizedHeroesOnly(bool $itemizedHeroesOnly): static
     {
-        $this->itemizedHeroesOnly = (bool) $itemizedHeroesOnly;
+        $this->itemizedHeroesOnly = $itemizedHeroesOnly;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
-        return 'IEconDOTA2_' . $this->getDota2AppId();
+        return 'IEconDOTA2_' . $this->getDota2AppId()->value;
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetHeroes';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
-        $params = [];
+        $params = [
+            'itemizedonly' => $this->itemizedHeroesOnly
+        ];
 
-        empty($this->language) ?: $params['language'] = $this->language;
-        is_null($this->itemizedHeroesOnly) ?: $params['itemizedonly'] = $this->itemizedHeroesOnly;
+        if (isset($this->language)) {
+            $params['language'] = $this->language;
+        }
 
         return $params;
     }
-} 
+}

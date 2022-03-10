@@ -1,61 +1,70 @@
 <?php
 
-namespace Steam\Command\Directory;
- 
-use Steam\Command\CommandInterface;
+namespace SquegTech\Steam\Command\Directory;
+
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetCMList implements CommandInterface
 {
     /**
      * @var int
      */
-    protected $cellId;
-
-    /**
-     * @var int
-     */
-    protected $maxCount;
+    private int $maxCount;
 
     /**
      * @param int $appId
      */
-    public function __construct($appId)
-    {
-        $this->cellId = $appId;
-    }
+    public function __construct(
+        private int $appId
+    ) {}
 
     /**
      * @param int $maxCount
      */
-    public function setMaxCount($maxCount)
+    public function setMaxCount(int $maxCount): void
     {
         $this->maxCount = $maxCount;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'ISteamDirectory';
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetCMList';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return int[]
+     */
+    public function getParams(): array
     {
         $params = [
-            'cellid' => $this->cellId,
+            'cellid' => $this->appId,
         ];
 
         empty($this->maxCount) ?: $params['maxcount'] = $this->maxCount;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Steam\Command\Dota2\Match;
+namespace SquegTech\Steam\Command\Dota2\Match;
 
-use Steam\Command\CommandInterface;
-use Steam\Traits\Dota2CommandTrait;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetLiveLeagueGames implements CommandInterface
 {
@@ -12,19 +12,18 @@ class GetLiveLeagueGames implements CommandInterface
     /**
      * @var int
      */
-    protected $leagueId;
+    private int $leagueId;
 
     /**
      * @var int
      */
-    protected $matchId;
+    private int $matchId;
 
     /**
      * @param int $leagueId
-     *
-     * @return self
+     * @return $this
      */
-    public function setLeagueId($leagueId)
+    public function setLeagueId(int $leagueId): static
     {
         $this->leagueId = $leagueId;
         return $this;
@@ -32,42 +31,61 @@ class GetLiveLeagueGames implements CommandInterface
 
     /**
      * @param int $matchId
-     *
-     * @return self
+     * @return $this
      */
-    public function setMatchId($matchId)
+    public function setMatchId(int $matchId): static
     {
         $this->matchId = $matchId;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
-        return 'IDOTA2Match_' . $this->getDota2AppId();
+        return 'IDOTA2Match_' . $this->getDota2AppId()->value;
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetLiveLeagueGames';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [];
 
-        empty($this->leagueId) ?: $params['league_id'] = $this->leagueId;
-        empty($this->matchId) ?: $params['match_id'] = $this->matchId;
+        if (isset($this->leagueId)) {
+            $params['league_id'] = $this->leagueId;
+        }
+
+        if (isset($this->matchId)) {
+            $params['match_id'] = $this->matchId;
+        }
 
         return $params;
     }
-} 
+}

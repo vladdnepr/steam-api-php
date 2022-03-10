@@ -1,9 +1,9 @@
 <?php
 
-namespace Steam\Command\Dota2\Match;
+namespace SquegTech\Steam\Command\Dota2\Match;
 
-use Steam\Command\CommandInterface;
-use Steam\Traits\Dota2CommandTrait;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetTeamInfoByTeamId implements CommandInterface
 {
@@ -12,19 +12,18 @@ class GetTeamInfoByTeamId implements CommandInterface
     /**
      * @var int
      */
-    protected $startAtTeamId;
+    private int $startAtTeamId;
 
     /**
      * @var int
      */
-    protected $teamsRequested;
+    private int $teamsRequested;
 
     /**
      * @param int $startAtTeamId
-     *
-     * @return self
+     * @return $this
      */
-    public function setStartAtTeamId($startAtTeamId)
+    public function setStartAtTeamId(int $startAtTeamId): static
     {
         $this->startAtTeamId = $startAtTeamId;
         return $this;
@@ -32,42 +31,61 @@ class GetTeamInfoByTeamId implements CommandInterface
 
     /**
      * @param int $teamsRequested
-     *
-     * @return self
+     * @return $this
      */
-    public function setTeamsRequested($teamsRequested)
+    public function setTeamsRequested(int $teamsRequested): static
     {
         $this->teamsRequested = $teamsRequested;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
-        return 'IDOTA2Match_' . $this->getDota2AppId();
+        return 'IDOTA2Match_' . $this->getDota2AppId()->value;
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetTeamInfoByTeamID';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [];
 
-        empty($this->startAtTeamId) ?: $params['start_at_team_id'] = $this->startAtTeamId;
-        empty($this->teamsRequested) ?: $params['teams_requested'] = $this->teamsRequested;
+        if (isset($this->startAtTeamId)) {
+            $params['start_at_team_id'] = $this->startAtTeamId;
+        }
+
+        if (isset($this->teamsRequested)) {
+            $params['teams_requested'] = $this->teamsRequested;
+        }
 
         return $params;
     }
-} 
+}

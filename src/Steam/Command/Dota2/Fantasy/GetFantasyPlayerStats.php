@@ -1,69 +1,62 @@
 <?php
 
-namespace Steam\Command\Dota2\Fantasy;
- 
-use Steam\Command\CommandInterface;
-use Steam\Traits\Dota2CommandTrait;
+namespace SquegTech\Steam\Command\Dota2\Fantasy;
+
+use DateTime;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetFantasyPlayerStats implements CommandInterface
 {
     use Dota2CommandTrait;
 
     /**
-     * @var int
+     * @var DateTime
      */
-    protected $fantasyLeagueId;
+    private DateTime $startTime;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
-    protected $startTime;
-
-    /**
-     * @var \DateTime
-     */
-    protected $endTime;
+    private DateTime $endTime;
 
     /**
      * @var int
      */
-    protected $matchId;
+    private int $matchId;
 
     /**
      * @var int
      */
-    protected $seriesId;
+    private int $seriesId;
 
     /**
      * @var int
      */
-    protected $playerAccountId;
+    private int $playerAccountId;
 
     /**
      * @param int $fantasyLeagueId
      */
-    public function __construct($fantasyLeagueId)
-    {
-        $this->fantasyLeagueId = (int) $fantasyLeagueId;
-    }
+    public function __construct(
+        private int $fantasyLeagueId
+    ) {}
 
     /**
-     * @param \Datetime $startTime
-     *
-     * @return self
+     * @param DateTime $startTime
+     * @return $this
      */
-    public function setStartTime(\DateTime $startTime)
+    public function setStartTime(DateTime $startTime): static
     {
         $this->startTime = $startTime;
         return $this;
     }
 
     /**
-     * @param \DateTime $endTime
-     *
-     * @return self
+     * @param DateTime $endTime
+     * @return $this
      */
-    public function setEndTime(\DateTime $endTime)
+    public function setEndTime(DateTime $endTime): static
     {
         $this->endTime = $endTime;
         return $this;
@@ -71,10 +64,9 @@ class GetFantasyPlayerStats implements CommandInterface
 
     /**
      * @param int $matchId
-     *
-     * @return self
+     * @return $this
      */
-    public function setMatchId($matchId)
+    public function setMatchId(int $matchId): static
     {
         $this->matchId = $matchId;
         return $this;
@@ -82,10 +74,9 @@ class GetFantasyPlayerStats implements CommandInterface
 
     /**
      * @param int $seriesId
-     *
-     * @return self
+     * @return $this
      */
-    public function setSeriesId($seriesId)
+    public function setSeriesId(int $seriesId): static
     {
         $this->seriesId = $seriesId;
         return $this;
@@ -93,46 +84,74 @@ class GetFantasyPlayerStats implements CommandInterface
 
     /**
      * @param int $playerAccountId
-     *
-     * @return self
+     * @return $this
      */
-    public function setPlayerAccountId($playerAccountId)
+    public function setPlayerAccountId(int $playerAccountId): static
     {
         $this->playerAccountId = $playerAccountId;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
-        return 'IDOTA2Fantasy_' . $this->getDota2AppId();
+        return 'IDOTA2Fantasy_' . $this->getDota2AppId()->value;
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetFantasyPlayerStats';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [
             'FantasyLeagueID' => $this->fantasyLeagueId,
         ];
 
-        empty($this->startTime) ?: $params['StartTime'] = $this->startTime->getTimestamp();
-        empty($this->endTime) ?: $params['EndTime'] = $this->endTime->getTimestamp();
-        empty($this->matchId) ?: $params['matchid'] = $this->matchId;
-        empty($this->seriesId) ?: $params['SeriesID'] = $this->seriesId;
-        empty($this->playerAccountId) ?: $params['PlayerAccountID'] = $this->playerAccountId;
+        if (isset($this->startTime)) {
+            $params['StartTime'] = $this->startTime->getTimestamp();
+        }
+
+        if (isset($this->endTime)) {
+            $params['EndTime'] = $this->endTime->getTimestamp();
+        }
+
+        if (isset($this->matchId)) {
+            $params['matchid'] = $this->matchId;
+        }
+
+        if (isset($this->seriesId)) {
+            $params['SeriesID'] = $this->seriesId;
+        }
+
+        if (isset($this->playerAccountId)) {
+            $params['PlayerAccountID'] = $this->playerAccountId;
+        }
 
         return $params;
     }

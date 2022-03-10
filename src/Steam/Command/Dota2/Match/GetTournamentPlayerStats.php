@@ -1,59 +1,51 @@
 <?php
 
-namespace Steam\Command\Dota2\Match;
+namespace SquegTech\Steam\Command\Dota2\Match;
 
-use Steam\Command\CommandInterface;
-use Steam\Traits\Dota2CommandTrait;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetTournamentPlayerStats implements CommandInterface
 {
     use Dota2CommandTrait;
 
     /**
-     * @var string
+     * @var int
      */
-    protected $accountId;
-
-    /**
-     * @var string
-     */
-    protected $leagueId;
-
-    /**
-     * @var string
-     */
-    protected $heroId;
+    private int $leagueId;
 
     /**
      * @var int
      */
-    protected $matchId;
+    private int $heroId;
 
     /**
-     * @param string $accountId
+     * @var int
      */
-    public function __construct($accountId)
-    {
-        $this->accountId = $accountId;
-    }
+    private int $matchId;
 
     /**
-     * @param string $leagueId
-     *
-     * @return self
+     * @param int $accountId
      */
-    public function setLeagueId($leagueId)
+    public function __construct(
+        private int $accountId
+    ) {}
+
+    /**
+     * @param int $leagueId
+     * @return $this
+     */
+    public function setLeagueId(int $leagueId): static
     {
         $this->leagueId = $leagueId;
         return $this;
     }
 
     /**
-     * @param string $heroId
-     *
-     * @return self
+     * @param int $heroId
+     * @return $this
      */
-    public function setHeroId($heroId)
+    public function setHeroId(int $heroId): static
     {
         $this->heroId = $heroId;
         return $this;
@@ -61,45 +53,67 @@ class GetTournamentPlayerStats implements CommandInterface
 
     /**
      * @param int $matchId
-     *
-     * @return self
+     * @return $this
      */
-    public function setMatchId($matchId)
+    public function setMatchId(int $matchId): static
     {
         $this->matchId = $matchId;
         return $this;
     }
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
-        return 'IDOTA2Match_' . $this->getDota2AppId();
+        return 'IDOTA2Match_' . $this->getDota2AppId()->value;
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetTournamentPlayerStats';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return array
+     */
+    public function getParams(): array
     {
         $params = [
             'account_id' => $this->accountId,
         ];
 
-        empty($this->leagueId) ?: $params['league_id'] = $this->leagueId;
-        empty($this->heroId) ?: $params['hero_id'] = $this->heroId;
-        empty($this->matchId) ?: $params['match_id'] = $this->matchId;
+        if (isset($this->leagueId)) {
+            $params['league_id'] = $this->leagueId;
+        }
+
+        if (isset($this->heroId)) {
+            $params['hero_id'] = $this->heroId;
+        }
+
+        if (isset($this->matchId)) {
+            $params['match_id'] = $this->matchId;
+        }
 
         return $params;
     }
-} 
+}
