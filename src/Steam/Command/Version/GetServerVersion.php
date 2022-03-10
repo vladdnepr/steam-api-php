@@ -1,46 +1,55 @@
 <?php
 
-namespace Steam\Command\Version;
+namespace SquegTech\Steam\Command\Version;
 
-use Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\CommandInterface;
 
 class GetServerVersion implements CommandInterface
 {
     /**
-     * @var int
-     */
-    protected $appId;
-
-    /**
      * @param int $appId
      */
-    public function __construct($appId)
-    {
-        $this->appId = $appId;
-    }
+    public function __construct(
+        private int $appId
+    ) {}
 
-    public function getInterface()
+    /**
+     * @return string
+     */
+    public function getInterface(): string
     {
         return 'IGCVersion_' . $this->appId;
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod(): string
     {
         return 'GetServerVersion';
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion(): string
     {
         return 'v1';
     }
 
-    public function getRequestMethod()
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
     {
         return 'GET';
     }
 
-    public function getParams()
+    /**
+     * @return string
+     */
+    public function getParams(): array
     {
         return [];
     }
-} 
+}
