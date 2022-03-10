@@ -7,14 +7,14 @@ use SquegTech\Steam\Exception\InvalidConfigOptionException;
 class Configuration
 {
     public const STEAM_KEY = 'steam_key';
-    public const BASE_STEAM_API_URL = 'base_steam_api_url';
+    private const BASE_STEAM_API_URL = 'base_steam_api_url';
 
     /**
      * @var array
      */
     private array $options = [
         self::STEAM_KEY => '',
-        self::BASE_STEAM_API_URL => 'https://api.steampowered.com'
+        self::BASE_STEAM_API_URL => Steam::BASE_URL,
     ];
 
     /**

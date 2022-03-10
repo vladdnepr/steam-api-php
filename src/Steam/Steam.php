@@ -7,6 +7,8 @@ use SquegTech\Steam\Runner\RunnerInterface;
 
 class Steam
 {
+    public const BASE_URL = 'https://api.steampowered.com';
+
     /**
      * @var array
      */
