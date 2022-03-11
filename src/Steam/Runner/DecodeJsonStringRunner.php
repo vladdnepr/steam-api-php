@@ -13,7 +13,7 @@ class DecodeJsonStringRunner extends AbstractRunner implements RunnerInterface
      * @param ResponseInterface|null $result
      * @return array|bool
      */
-    public function run(CommandInterface $command, ResponseInterface $result = null): array|bool
+    public function run(CommandInterface $command, ResponseInterface|null $result = null): array|bool
     {
         if($result === null) {
             throw new InvalidArgumentException(

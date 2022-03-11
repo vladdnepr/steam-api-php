@@ -9,7 +9,7 @@ abstract class AbstractRunner
     /**
      * @var Configuration
      */
-    private Configuration $config;
+    protected Configuration $config;
 
     /**
      * @param Configuration $config

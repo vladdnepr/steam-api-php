@@ -2,6 +2,7 @@
 
 namespace SquegTech\Steam\Runner;
 
+use Psr\Http\Message\ResponseInterface;
 use SquegTech\Steam\Command\CommandInterface;
 use SquegTech\Steam\Configuration;
 
@@ -25,9 +26,9 @@ interface RunnerInterface
      * should be some sort of interface as well?
      *
      * @param CommandInterface $command
-     * @param null $result
+     * @param ResponseInterface|null $result
      *
      * @return mixed
      */
-    public function run(CommandInterface $command, $result = null): mixed;
+    public function run(CommandInterface $command, ResponseInterface|null $result = null): mixed;
 }

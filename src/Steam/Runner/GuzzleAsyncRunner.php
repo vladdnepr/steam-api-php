@@ -5,6 +5,7 @@ namespace SquegTech\Steam\Runner;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\ResponseInterface;
 use SquegTech\Steam\Command\CommandInterface;
 use SquegTech\Steam\Utility\UrlBuilderInterface;
 
@@ -24,7 +25,7 @@ class GuzzleAsyncRunner extends AbstractRunner implements RunnerInterface
      *
      * @return PromiseInterface
      */
-    public function run(CommandInterface $command, $result = null): mixed
+    public function run(CommandInterface $command, ResponseInterface|null $result = null): PromiseInterface
     {
         $key = $command->getRequestMethod() === 'GET' ? 'query' : 'body';
         $options = [

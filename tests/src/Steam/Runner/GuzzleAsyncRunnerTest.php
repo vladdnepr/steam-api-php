@@ -1,39 +1,48 @@
 <?php
 
-namespace Steam\Runner;
+namespace SquegTech\Steam\Tests\Runner;
 
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Psr7\Uri;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Configuration;
+use SquegTech\Steam\Runner\GuzzleAsyncRunner;
+use SquegTech\Steam\Utility\UrlBuilderInterface;
 
-class GuzzleAsyncRunnerTest extends \PHPUnit_Framework_TestCase
+class GuzzleAsyncRunnerTest extends TestCase
 {
     /**
      * @var GuzzleAsyncRunner
      */
-    protected $instance;
+    private GuzzleAsyncRunner $instance;
 
     /**
      * @var M\MockInterface
      */
-    protected $clientMock;
+    private M\MockInterface $clientMock;
 
     /**
      * @var M\MockInterface
      */
-    protected $urlBuilderMock;
+    private M\MockInterface $urlBuilderMock;
 
     /**
      * @var M\MockInterface
      */
-    protected $configMock;
+    private M\MockInterface $configMock;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->clientMock = M::mock('GuzzleHttp\ClientInterface');
-        $this->urlBuilderMock = M::mock('Steam\Utility\UrlBuilderInterface');
+        $this->clientMock = M::mock(ClientInterface::class);
+        $this->urlBuilderMock = M::mock(UrlBuilderInterface::class);
 
         $this->instance = new GuzzleAsyncRunner($this->clientMock, $this->urlBuilderMock);
 
-        $this->configMock = M::mock('Steam\Configuration', [
+        $this->configMock = M::mock(Configuration::class, [
             'getBaseSteamApiUrl' => 'http://base.url.com',
         ]);
 
@@ -45,7 +54,7 @@ class GuzzleAsyncRunnerTest extends \PHPUnit_Framework_TestCase
         $params = ['query' => ['a' => 'bc']];
         $url = 'http://base.url.com/built';
 
-        $commandMock = M::mock('Steam\Command\CommandInterface', [
+        $commandMock = M::mock(CommandInterface::class, [
             'getParams' => $params['query'],
             'getRequestMethod' => 'GET',
         ]);
@@ -53,11 +62,13 @@ class GuzzleAsyncRunnerTest extends \PHPUnit_Framework_TestCase
         $this->configMock->shouldReceive('getSteamKey')->andReturn('');
 
         $this->urlBuilderMock->shouldReceive('setBaseUrl')->with('http://base.url.com');
-        $this->urlBuilderMock->shouldReceive('build')->andReturn($url);
+        $this->urlBuilderMock->shouldReceive('build')->andReturn(new Uri($url));
 
-        $promise = M::mock('GuzzleHttp\Promise\PromiseInterface');
+        $promise = M::mock(PromiseInterface::class);
 
-        $this->clientMock->shouldReceive('sendAsync')->with(M::type('Psr\Http\Message\RequestInterface'), $params)->andReturn($promise)->once();
+        $this->clientMock->shouldReceive('sendAsync')
+            ->with(M::type(RequestInterface::class), $params)
+            ->andReturn($promise)->once();
 
         $this->assertEquals($promise, $this->instance->run($commandMock));
     }
@@ -72,7 +83,7 @@ class GuzzleAsyncRunnerTest extends \PHPUnit_Framework_TestCase
             'key' => $steamKey,
         ])];
 
-        $commandMock = M::mock('Steam\Command\CommandInterface', [
+        $commandMock = M::mock(CommandInterface::class, [
                 'getParams' => $commandParams,
                 'getRequestMethod' => 'GET',
             ]);
@@ -80,13 +91,14 @@ class GuzzleAsyncRunnerTest extends \PHPUnit_Framework_TestCase
         $this->configMock->shouldReceive('getSteamKey')->andReturn($steamKey);
 
         $this->urlBuilderMock->shouldReceive('setBaseUrl')->with('http://base.url.com');
-        $this->urlBuilderMock->shouldReceive('build')->andReturn($url);
+        $this->urlBuilderMock->shouldReceive('build')->andReturn(new Uri($url));
 
-        $promise = M::mock('GuzzleHttp\Promise\PromiseInterface');
+        $promise = M::mock(PromiseInterface::class);
 
-        $this->clientMock->shouldReceive('sendAsync')->with(M::type('Psr\Http\Message\RequestInterface'), $options)->andReturn($promise)->once();
+        $this->clientMock->shouldReceive('sendAsync')
+            ->with(M::type(RequestInterface::class), $options)
+            ->andReturn($promise)->once();
 
         $this->assertEquals($promise, $this->instance->run($commandMock));
     }
 }
- 

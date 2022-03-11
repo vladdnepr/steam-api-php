@@ -1,17 +1,20 @@
 <?php
 
-namespace Steam\Utility;
+namespace SquegTech\Steam\Tests\Utility;
 
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Utility\GuzzleUrlBuilder;
 
-class GuzzleUrlBuilderTest extends \PHPUnit_Framework_TestCase
+class GuzzleUrlBuilderTest extends TestCase
 {
     /**
      * @var GuzzleUrlBuilder
      */
-    protected $instance;
+    private GuzzleUrlBuilder $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GuzzleUrlBuilder();
     }
@@ -20,7 +23,7 @@ class GuzzleUrlBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $baseUrl = 'http://base.url.com';
 
-        $commandMock = M::mock('Steam\Command\CommandInterface', [
+        $commandMock = M::mock(CommandInterface::class, [
                 'getInterface' => 'testInterface',
                 'getMethod' => 'testMethod',
                 'getVersion' => 'testVersion',
@@ -35,4 +38,3 @@ class GuzzleUrlBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/testInterface/testMethod/testVersion', $uri->getPath());
     }
 }
- 

@@ -1,27 +1,32 @@
 <?php
 
-namespace Steam\Runner;
+namespace SquegTech\Steam\Tests\Runner;
 
+use InvalidArgumentException;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Runner\DecodeJsonStringRunner;
 
-class DecodeJsonStringRunnerTest extends \PHPUnit_Framework_TestCase
+class DecodeJsonStringRunnerTest extends TestCase
 {
     /**
      * @var DecodeJsonStringRunner
      */
-    protected $instance;
+    private DecodeJsonStringRunner $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new DecodeJsonStringRunner();
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testResultMustBeInstanceOfResponseInterface()
     {
-        $this->instance->run(M::mock('Steam\Command\CommandInterface'), 'test result');
+        $this->expectException(InvalidArgumentException::class);
+
+        $this->instance->run(M::mock(CommandInterface::class));
     }
 
     public function testJsonIsCalledOnResponseObject()
@@ -29,14 +34,13 @@ class DecodeJsonStringRunnerTest extends \PHPUnit_Framework_TestCase
         $resultString = '{"a":"bc"}';
         $resultArray = ['a' => 'bc'];
 
-        $stream = M::mock('Psr\Http\Message\StreamInterface');
+        $stream = M::mock(StreamInterface::class);
         $stream->shouldReceive('getContents')->andReturn($resultString)->once();
 
-        $response = M::mock('Psr\Http\Message\ResponseInterface');
+        $response = M::mock(ResponseInterface::class);
         $response->shouldReceive('getBody')->andReturn($stream)->once();
 
-        $this->assertEquals($resultArray, $this->instance->run(M::mock('Steam\Command\CommandInterface'), $response));
+        $this->assertEquals($resultArray, $this->instance->run(M::mock(CommandInterface::class), $response));
 
     }
 }
- 
