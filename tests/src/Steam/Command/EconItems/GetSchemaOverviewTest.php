@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\EconItems;
+namespace SquegTech\Steam\Tests\Command\EconItems;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\EconItems\GetSchemaOverview;
 
-class GetSchemaOverviewTest extends \PHPUnit_Framework_TestCase
+class GetSchemaOverviewTest extends TestCase
 {
     /**
      * @var GetSchemaOverview
      */
-    protected $instance;
+    private GetSchemaOverview $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetSchemaOverview(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -37,4 +39,3 @@ class GetSchemaOverviewTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['language' => 'en'], $this->instance->getParams());
     }
 }
- 

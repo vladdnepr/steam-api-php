@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\EconService;
+namespace SquegTech\Steam\Tests\Command\EconService;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\EconService\GetTradeOffersSummary;
 
-class GetTradeOffersSummaryTest extends \PHPUnit_Framework_TestCase
+class GetTradeOffersSummaryTest extends TestCase
 {
     /**
      * @var GetTradeOffersSummary
      */
-    protected $instance;
+    private GetTradeOffersSummary $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetTradeOffersSummary();
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

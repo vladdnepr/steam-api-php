@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Economy;
+namespace SquegTech\Steam\Tests\Command\Economy;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Economy\GetAssetClassInfo;
 
-class GetAssetClassInfoTest extends \PHPUnit_Framework_TestCase
+class GetAssetClassInfoTest extends TestCase
 {
     /**
      * @var GetAssetClassInfo
      */
-    protected $instance;
+    private GetAssetClassInfo $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetAssetClassInfo(123, [1, 2, 3]);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -66,4 +68,3 @@ class GetAssetClassInfoTest extends \PHPUnit_Framework_TestCase
         ], $this->instance->getParams());
     }
 }
- 

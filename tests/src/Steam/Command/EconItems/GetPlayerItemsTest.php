@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\EconItems;
+namespace SquegTech\Steam\Tests\Command\EconItems;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\EconItems\GetPlayerItems;
 
-class GetPlayerItemsTest extends \PHPUnit_Framework_TestCase
+class GetPlayerItemsTest extends TestCase
 {
     /**
      * @var GetPlayerItems
      */
-    protected $instance;
+    private GetPlayerItems $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetPlayerItems(123, 456);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -30,4 +32,3 @@ class GetPlayerItemsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['steamid' => 456], $this->instance->getParams());
     }
 }
- 

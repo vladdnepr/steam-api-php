@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\EconItems;
+namespace SquegTech\Steam\Tests\Command\EconItems;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\EconItems\GetStoreStatus;
 
-class GetStoreStatusTest extends \PHPUnit_Framework_TestCase
+class GetStoreStatusTest extends TestCase
 {
     /**
      * @var GetStoreStatus
      */
-    protected $instance;
+    private GetStoreStatus $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetStoreStatus(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

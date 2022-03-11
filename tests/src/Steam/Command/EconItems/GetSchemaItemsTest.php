@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\EconItems;
+namespace SquegTech\Steam\Tests\Command\EconItems;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\EconItems\GetSchemaItems;
 
-class GetSchemaItemsTest extends \PHPUnit_Framework_TestCase
+class GetSchemaItemsTest extends TestCase
 {
     /**
      * @var GetSchemaItems
      */
-    protected $instance;
+    private GetSchemaItems $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetSchemaItems(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -44,4 +46,3 @@ class GetSchemaItemsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['start' => 50], $this->instance->getParams());
     }
 }
- 
