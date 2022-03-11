@@ -23,6 +23,7 @@ class GetBroadcasterInfo implements CommandInterface
     public function setLeagueId(int $leagueId): static
     {
         $this->leagueId = $leagueId;
+        return $this;
     }
 
     /**
