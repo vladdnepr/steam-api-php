@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\GameServersService;
+namespace SquegTech\Steam\Tests\Command\GameServersService;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\GameServersService\GetServerIPsBySteamID;
 
-class GetServerIPsBySteamIDTest extends \PHPUnit_Framework_TestCase
+class GetServerIPsBySteamIDTest extends TestCase
 {
     /**
      * @var GetServerIPsBySteamID
      */
-    protected $instance;
+    private GetServerIPsBySteamID $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetServerIPsBySteamID(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -30,4 +32,3 @@ class GetServerIPsBySteamIDTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['server_steamids' => 123], $this->instance->getParams());
     }
 }
- 

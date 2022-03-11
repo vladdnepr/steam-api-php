@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\GameServersService;
+namespace SquegTech\Steam\Tests\Command\GameServersService;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\GameServersService\CreateAccount;
 
-class CreateAccountTest extends \PHPUnit_Framework_TestCase
+class CreateAccountTest extends TestCase
 {
     /**
      * @var CreateAccount
      */
-    protected $instance;
+    private CreateAccount $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new CreateAccount(123, 'memo');
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

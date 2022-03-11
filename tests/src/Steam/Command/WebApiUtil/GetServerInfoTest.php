@@ -1,25 +1,27 @@
 <?php
 
-namespace Steam\Command\WebApiUtil;
+namespace SquegTech\Steam\Tests\Command\WebApiUtil;
 
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\WebApiUtil\GetServerInfo;
 
-class GetServerInfoTest extends \PHPUnit_Framework_TestCase
+class GetServerInfoTest extends TestCase
 {
     /**
      * @var GetServerInfo
      */
-    protected $instance;
+    private GetServerInfo $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetServerInfo();
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -31,4 +33,3 @@ class GetServerInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $this->instance->getParams());
     }
 }
- 

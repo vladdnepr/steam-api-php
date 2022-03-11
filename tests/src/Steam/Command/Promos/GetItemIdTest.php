@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Promos;
+namespace SquegTech\Steam\Tests\Command\Promos;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Promos\GetItemId;
 
-class GetItemIdTest extends \PHPUnit_Framework_TestCase
+class GetItemIdTest extends TestCase
 {
     /**
      * @var GetItemId
      */
-    protected $instance;
+    private GetItemId $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetItemId(123, 456, 789);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

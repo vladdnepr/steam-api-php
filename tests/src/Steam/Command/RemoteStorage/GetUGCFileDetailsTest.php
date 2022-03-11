@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\RemoteStorage;
+namespace SquegTech\Steam\Tests\Command\RemoteStorage;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\RemoteStorage\GetUGCFileDetails;
 
-class GetUGCFileDetailsTest extends \PHPUnit_Framework_TestCase
+class GetUGCFileDetailsTest extends TestCase
 {
     /**
      * @var GetUGCFileDetails
      */
-    protected $instance;
+    private GetUGCFileDetails $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetUGCFileDetails(123, 456);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

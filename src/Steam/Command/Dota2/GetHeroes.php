@@ -3,11 +3,13 @@
 namespace SquegTech\Steam\Command\Dota2;
 
 use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\HasLanguage;
 use SquegTech\Steam\Traits\Dota2CommandTrait;
 
 class GetHeroes implements CommandInterface
 {
-    use Dota2CommandTrait;
+    use Dota2CommandTrait,
+        HasLanguage;
 
     /**
      * @var bool

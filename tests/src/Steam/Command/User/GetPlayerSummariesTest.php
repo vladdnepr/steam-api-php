@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\User;
+namespace SquegTech\Steam\Tests\Command\User;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\User\GetPlayerSummaries;
 
-class GetPlayerSummariesTest extends \PHPUnit_Framework_TestCase
+class GetPlayerSummariesTest extends TestCase
 {
     /**
-     * @var GetPlayerBans
+     * @var GetPlayerSummaries
      */
-    protected $instance;
+    private GetPlayerSummaries $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetPlayerSummaries([123,456]);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -36,4 +38,3 @@ class GetPlayerSummariesTest extends \PHPUnit_Framework_TestCase
         ], $this->instance->getParams());
     }
 }
- 

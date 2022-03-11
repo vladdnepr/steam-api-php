@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\UserAuth;
+namespace SquegTech\Steam\Tests\Command\UserAuth;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\UserAuth\AuthenticateUserTicket;
 
-class AuthenticateUserTicketTest extends \PHPUnit_Framework_TestCase
+class AuthenticateUserTicketTest extends TestCase
 {
     /**
      * @var AuthenticateUserTicket
      */
-    protected $instance;
+    private AuthenticateUserTicket $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new AuthenticateUserTicket(123, 'test');
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

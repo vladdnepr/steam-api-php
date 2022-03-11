@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\PlayerService;
+namespace SquegTech\Steam\Tests\Command\PlayerService;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\PlayerService\GetSteamLevel;
 
-class GetSteamLevelTest extends \PHPUnit_Framework_TestCase
+class GetSteamLevelTest extends TestCase
 {
     /**
      * @var GetSteamLevel
      */
-    protected $instance;
+    private GetSteamLevel $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetSteamLevel(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -30,4 +32,3 @@ class GetSteamLevelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['steamid' => 123], $this->instance->getParams());
     }
 }
- 

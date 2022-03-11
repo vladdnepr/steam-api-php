@@ -107,7 +107,7 @@ class GetOwnedGames implements CommandInterface
             $params['include_played_free_games'] = $this->includeFreeGames;
         }
 
-        if ($this->appIdsFilter) {
+        if (isset($this->appIdsFilter)) {
             $params['appids_filter'] = $this->appIdsFilter;
         }
 

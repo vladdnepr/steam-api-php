@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\GameServersService;
+namespace SquegTech\Steam\Tests\Command\GameServersService;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\GameServersService\QueryLoginToken;
 
-class QueryLoginTokenTest extends \PHPUnit_Framework_TestCase
+class QueryLoginTokenTest extends TestCase
 {
     /**
      * @var QueryLoginToken
      */
-    protected $instance;
+    private QueryLoginToken $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new QueryLoginToken('login_token_test');
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

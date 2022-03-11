@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\WebApiUtil;
+namespace SquegTech\Steam\Tests\Command\WebApiUtil;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\WebApiUtil\GetSupportedApiList;
 
-class GetSupportedApiListTest extends \PHPUnit_Framework_TestCase
+class GetSupportedApiListTest extends TestCase
 {
     /**
      * @var GetSupportedAPIList
      */
-    protected $instance;
+    private GetSupportedApiList $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetSupportedApiList();
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -30,4 +32,3 @@ class GetSupportedApiListTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $this->instance->getParams());
     }
 }
- 

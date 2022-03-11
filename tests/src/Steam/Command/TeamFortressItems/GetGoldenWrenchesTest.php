@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\TeamFortressItems;
+namespace SquegTech\Steam\Tests\Command\TeamFortressItems;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\TeamFortressItems\GetGoldenWrenches;
 
-class GetGoldenWrenchesTest extends \PHPUnit_Framework_TestCase
+class GetGoldenWrenchesTest extends TestCase
 {
     /**
      * @var GetGoldenWrenches
      */
-    protected $instance;
+    private GetGoldenWrenches $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetGoldenWrenches();
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -30,4 +32,3 @@ class GetGoldenWrenchesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $this->instance->getParams());
     }
 }
- 

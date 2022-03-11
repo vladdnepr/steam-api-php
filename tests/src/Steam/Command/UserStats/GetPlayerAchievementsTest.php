@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\UserStats;
+namespace SquegTech\Steam\Tests\Command\UserStats;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\UserStats\GetPlayerAchievements;
 
-class GetPlayerAchievementsTest extends \PHPUnit_Framework_TestCase
+class GetPlayerAchievementsTest extends TestCase
 {
     /**
      * @var GetPlayerAchievements
      */
-    protected $instance;
+    private GetPlayerAchievements $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetPlayerAchievements(123, 456);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -44,4 +46,3 @@ class GetPlayerAchievementsTest extends \PHPUnit_Framework_TestCase
         ], $this->instance->getParams());
     }
 }
- 

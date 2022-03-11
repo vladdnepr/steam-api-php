@@ -1,24 +1,27 @@
 <?php
 
-namespace Steam\Command\PublishedFileService;
+namespace SquegTech\Steam\Tests\Command\PublishedFileService;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\PublishedFileService\QueryFiles;
+use SquegTech\Steam\Enums\EPublishedFileQueryType;
 
-class QueryFilesTest extends \PHPUnit_Framework_TestCase
+class QueryFilesTest extends TestCase
 {
     /**
      * @var QueryFiles
      */
-    protected $instance;
+    private QueryFiles $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new QueryFiles();
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -47,7 +50,7 @@ class QueryFilesTest extends \PHPUnit_Framework_TestCase
 
     public function testSettingQueryType()
     {
-        $this->instance->setQueryType(1);
+        $this->instance->setQueryType(EPublishedFileQueryType::RankedByPublicationDate);
         $this->assertParams(['query_type' => 1]);
     }
 
@@ -215,4 +218,3 @@ class QueryFilesTest extends \PHPUnit_Framework_TestCase
         ], $params), $this->instance->getParams());
     }
 }
- 

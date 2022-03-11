@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\User;
+namespace SquegTech\Steam\Tests\Command\User;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\User\GetFriendList;
 
-class GetFriendListTest extends \PHPUnit_Framework_TestCase
+class GetFriendListTest extends TestCase
 {
     /**
      * @var GetFriendList
      */
-    protected $instance;
+    private GetFriendList $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetFriendList(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -46,4 +48,3 @@ class GetFriendListTest extends \PHPUnit_Framework_TestCase
         ], $this->instance->getParams());
     }
 }
- 

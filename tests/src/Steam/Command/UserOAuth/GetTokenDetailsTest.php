@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\UserOAuth;
+namespace SquegTech\Steam\Tests\Command\UserOAuth;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\UserOAuth\GetTokenDetails;
 
-class GetTokenDetailsTest extends \PHPUnit_Framework_TestCase
+class GetTokenDetailsTest extends TestCase
 {
     /**
      * @var GetTokenDetails
      */
-    protected $instance;
+    private GetTokenDetails $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetTokenDetails('access_token_string');
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

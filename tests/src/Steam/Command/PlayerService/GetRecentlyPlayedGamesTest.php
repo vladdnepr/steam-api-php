@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\PlayerService;
+namespace SquegTech\Steam\Tests\Command\PlayerService;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\PlayerService\GetRecentlyPlayedGames;
 
-class GetRecentlyPlayedGamesTest extends \PHPUnit_Framework_TestCase
+class GetRecentlyPlayedGamesTest extends TestCase
 {
     /**
      * @var GetRecentlyPlayedGames
      */
-    protected $instance;
+    private GetRecentlyPlayedGames $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetRecentlyPlayedGames(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -36,15 +38,4 @@ class GetRecentlyPlayedGamesTest extends \PHPUnit_Framework_TestCase
             'count' => 0,
         ], $this->instance->getParams());
     }
-
-    public function testSettingCountToNull()
-    {
-        $this->instance->setCount(null);
-
-        $this->assertEquals([
-            'steamid' => 123,
-            'count' => 0,
-        ], $this->instance->getParams());
-    }
 }
- 

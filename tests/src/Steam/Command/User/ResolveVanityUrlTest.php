@@ -1,24 +1,27 @@
 <?php
 
-namespace Steam\Command\User;
+namespace SquegTech\Steam\Tests\Command\User;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\User\ResolveVanityUrl;
+use SquegTech\Steam\Enums\UrlType;
 
-class ResolveVanityUrlTest extends \PHPUnit_Framework_TestCase
+class ResolveVanityUrlTest extends TestCase
 {
     /**
      * @var ResolveVanityUrl
      */
-    protected $instance;
+    private ResolveVanityUrl $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new ResolveVanityUrl('http://vanity.url');
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -33,26 +36,17 @@ class ResolveVanityUrlTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals([
             'vanityurl' => 'http://vanity.url',
-            'url_type' => ResolveVanityUrl::INDIVIDUAL_PROFILE,
-            ], $this->instance->getParams());
+            'url_type' => UrlType::INDIVIDUAL_PROFILE->value,
+        ], $this->instance->getParams());
     }
 
     public function testSettingUrlTypeChangesParamValues()
     {
-        $instance = new ResolveVanityUrl('http://vanity.url', ResolveVanityUrl::GROUP);
+        $instance = new ResolveVanityUrl('http://vanity.url', UrlType::GROUP);
 
         $this->assertEquals([
             'vanityurl' => 'http://vanity.url',
-            'url_type' => ResolveVanityUrl::GROUP,
+            'url_type' => UrlType::GROUP->value,
         ], $instance->getParams());
     }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testPassingInIncorrectUrlTypeThrowsException()
-    {
-        new ResolveVanityUrl('http://vanity.url', 4);
-    }
 }
- 

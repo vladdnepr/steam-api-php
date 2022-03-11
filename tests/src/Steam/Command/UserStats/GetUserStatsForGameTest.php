@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\UserStats;
+namespace SquegTech\Steam\Tests\Command\UserStats;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\UserStats\GetUserStatsForGame;
 
-class GetUserStatsForGameTest extends \PHPUnit_Framework_TestCase
+class GetUserStatsForGameTest extends TestCase
 {
     /**
      * @var GetUserStatsForGame
      */
-    protected $instance;
+    private GetUserStatsForGame $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetUserStatsForGame(123, 456);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -33,4 +35,3 @@ class GetUserStatsForGameTest extends \PHPUnit_Framework_TestCase
         ], $this->instance->getParams());
     }
 }
- 

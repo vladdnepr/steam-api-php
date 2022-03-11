@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\GameServersService;
+namespace SquegTech\Steam\Tests\Command\GameServersService;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\GameServersService\DeleteAccount;
 
-class DeleteAccountTest extends \PHPUnit_Framework_TestCase
+class DeleteAccountTest extends TestCase
 {
     /**
      * @var DeleteAccount
      */
-    protected $instance;
+    private DeleteAccount $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new DeleteAccount(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

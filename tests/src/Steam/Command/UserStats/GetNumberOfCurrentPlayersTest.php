@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\UserStats;
+namespace SquegTech\Steam\Tests\Command\UserStats;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\UserStats\GetNumberOfCurrentPlayers;
 
-class GetNumberOfCurrentPlayersTest extends \PHPUnit_Framework_TestCase
+class GetNumberOfCurrentPlayersTest extends TestCase
 {
     /**
      * @var GetNumberOfCurrentPlayers
      */
-    protected $instance;
+    private GetNumberOfCurrentPlayers $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetNumberOfCurrentPlayers(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -36,4 +38,3 @@ class GetNumberOfCurrentPlayersTest extends \PHPUnit_Framework_TestCase
         ], $this->instance->getParams());
     }
 }
- 

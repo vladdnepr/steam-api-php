@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\GameServersService;
+namespace SquegTech\Steam\Tests\Command\GameServersService;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\GameServersService\SetMemo;
 
-class SetMemoTest extends \PHPUnit_Framework_TestCase
+class SetMemoTest extends TestCase
 {
     /**
      * @var SetMemo
      */
-    protected $instance;
+    private SetMemo $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new SetMemo(123, 'memo');
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

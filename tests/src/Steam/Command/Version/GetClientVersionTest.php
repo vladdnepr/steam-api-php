@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Version;
+namespace SquegTech\Steam\Tests\Command\Version;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Version\GetClientVersion;
 
-class GetClientVersionTest extends \PHPUnit_Framework_TestCase
+class GetClientVersionTest extends TestCase
 {
     /**
      * @var GetClientVersion
      */
-    protected $instance;
+    private GetClientVersion $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetClientVersion(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -30,4 +32,3 @@ class GetClientVersionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $this->instance->getParams());
     }
 }
- 

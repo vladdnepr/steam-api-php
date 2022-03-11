@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\PlayerService;
+namespace SquegTech\Steam\Tests\Command\PlayerService;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\PlayerService\GetCommunityBadgeProgress;
 
-class GetCommunityBadgeProgressTest extends \PHPUnit_Framework_TestCase
+class GetCommunityBadgeProgressTest extends TestCase
 {
     /**
      * @var GetCommunityBadgeProgress
      */
-    protected $instance;
+    private GetCommunityBadgeProgress $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetCommunityBadgeProgress(123, 456);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -33,4 +35,3 @@ class GetCommunityBadgeProgressTest extends \PHPUnit_Framework_TestCase
         ], $this->instance->getParams());
     }
 }
- 

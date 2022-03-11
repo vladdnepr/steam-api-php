@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Portal2Leaderboards;
+namespace SquegTech\Steam\Tests\Command\Portal2Leaderboards;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Portal2Leaderboards\GetBucketizedData;
 
-class GetBucketizedDataTest extends \PHPUnit_Framework_TestCase
+class GetBucketizedDataTest extends TestCase
 {
     /**
      * @var GetBucketizedData
      */
-    protected $instance;
+    private GetBucketizedData $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetBucketizedData('test');
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
