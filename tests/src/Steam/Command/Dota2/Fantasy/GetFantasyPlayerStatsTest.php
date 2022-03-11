@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Dota2\Fantasy;
+namespace SquegTech\Steam\Tests\Command\Dota2\Fantasy;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Dota2\Fantasy\GetFantasyPlayerStats;
 
-class GetFantasyPlayerStatsTest extends \PHPUnit_Framework_TestCase
+class GetFantasyPlayerStatsTest extends TestCase
 {
     /**
      * @var GetFantasyPlayerStats
      */
-    protected $instance;
+    private GetFantasyPlayerStats $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetFantasyPlayerStats(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

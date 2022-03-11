@@ -1,24 +1,28 @@
 <?php
 
-namespace Steam\Command\Dota2\Match;
+namespace SquegTech\Steam\Tests\Command\Dota2\Match;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Dota2\Match\GetMatchHistory;
+use SquegTech\Steam\Enums\Dota2GameMode;
+use SquegTech\Steam\Enums\SkillLevel;
 
-class GetMatchHistoryTest extends \PHPUnit_Framework_TestCase
+class GetMatchHistoryTest extends TestCase
 {
     /**
      * @var GetMatchHistory
      */
-    protected $instance;
+    private GetMatchHistory $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetMatchHistory();
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -87,29 +91,13 @@ class GetMatchHistoryTest extends \PHPUnit_Framework_TestCase
 
     public function testSettingSkill()
     {
-        $this->instance->setSkill(2);
+        $this->instance->setSkill(SkillLevel::TWO);
         $this->assertEquals(['skill' => 2], $this->instance->getParams());
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testSettingInvalidSkill()
-    {
-        $this->instance->setSkill(100);
     }
 
     public function testSettingGameMode()
     {
-        $this->instance->setGameMode(12);
+        $this->instance->setGameMode(Dota2GameMode::LEAST_PLAYED);
         $this->assertEquals(['game_mode' => 12], $this->instance->getParams());
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testSettingInvalidGameMode()
-    {
-        $this->instance->setGameMode(100);
     }
 }

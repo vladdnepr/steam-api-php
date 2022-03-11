@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Dota2\Match;
+namespace SquegTech\Steam\Tests\Command\Dota2\Match;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Dota2\Match\GetLiveLeagueGames;
 
-class GetLiveLeagueGamesTest extends \PHPUnit_Framework_TestCase
+class GetLiveLeagueGamesTest extends TestCase
 {
     /**
      * @var GetLiveLeagueGames
      */
-    protected $instance;
+    private GetLiveLeagueGames $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetLiveLeagueGames();
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -66,4 +68,3 @@ class GetLiveLeagueGamesTest extends \PHPUnit_Framework_TestCase
         ], $this->instance->getParams());
     }
 }
- 

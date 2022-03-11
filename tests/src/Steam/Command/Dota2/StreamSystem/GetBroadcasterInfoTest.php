@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Dota2\StreamSystem;
+namespace SquegTech\Steam\Tests\Command\Dota2\StreamSystem;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Dota2\StreamSystem\GetBroadcasterInfo;
 
-class GetBroadcasterInfoTest extends \PHPUnit_Framework_TestCase
+class GetBroadcasterInfoTest extends TestCase
 {
     /**
      * @var GetBroadcasterInfo
      */
-    protected $instance;
+    private GetBroadcasterInfo $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetBroadcasterInfo(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

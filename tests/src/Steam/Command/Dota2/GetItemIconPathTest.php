@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Dota2;
+namespace SquegTech\Steam\Tests\Command\Dota2;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Dota2\GetItemIconPath;
 
-class GetItemIconPathTest extends \PHPUnit_Framework_TestCase
+class GetItemIconPathTest extends TestCase
 {
     /**
      * @var GetItemIconPath
      */
-    protected $instance;
+    private GetItemIconPath $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetItemIconPath('test');
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -41,4 +43,3 @@ class GetItemIconPathTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('IEconDOTA2_570', $this->instance->getInterface());
     }
 }
- 

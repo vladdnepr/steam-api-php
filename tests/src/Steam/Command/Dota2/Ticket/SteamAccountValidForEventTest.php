@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Dota2\Ticket;
+namespace SquegTech\Steam\Tests\Command\Dota2\Ticket;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Dota2\Ticket\SteamAccountValidForEvent;
 
-class SteamAccountValidForEventTest extends \PHPUnit_Framework_TestCase
+class SteamAccountValidForEventTest extends TestCase
 {
     /**
      * @var SteamAccountValidForEvent
      */
-    protected $instance;
+    private SteamAccountValidForEvent $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new SteamAccountValidForEvent(123, 456);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

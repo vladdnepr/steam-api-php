@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Dota2;
+namespace SquegTech\Steam\Tests\Command\Dota2;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Dota2\GetEmoticonAccessForUser;
 
-class GetEmoticonAccessForUserTest extends \PHPUnit_Framework_TestCase
+class GetEmoticonAccessForUserTest extends TestCase
 {
     /**
      * @var GetEmoticonAccessForUser
      */
-    protected $instance;
+    private GetEmoticonAccessForUser $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetEmoticonAccessForUser(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -30,4 +32,3 @@ class GetEmoticonAccessForUserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['steamid' => 123], $this->instance->getParams());
     }
 }
- 

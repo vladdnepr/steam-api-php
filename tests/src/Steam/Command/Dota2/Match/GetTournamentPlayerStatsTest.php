@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Dota2\Match;
+namespace SquegTech\Steam\Tests\Command\Dota2\Match;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Dota2\Match\GetTournamentPlayerStats;
 
-class GetTournamentPlayerStatsTest extends \PHPUnit_Framework_TestCase
+class GetTournamentPlayerStatsTest extends TestCase
 {
     /**
      * @var GetTournamentPlayerStats
      */
-    protected $instance;
+    private GetTournamentPlayerStats $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetTournamentPlayerStats(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -76,4 +78,3 @@ class GetTournamentPlayerStatsTest extends \PHPUnit_Framework_TestCase
         ], $this->instance->getParams());
     }
 }
- 

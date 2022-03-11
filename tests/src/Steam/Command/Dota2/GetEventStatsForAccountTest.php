@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Dota2;
+namespace SquegTech\Steam\Tests\Command\Dota2;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Dota2\GetEventStatsForAccount;
 
-class GetEventStatsForAccountTest extends \PHPUnit_Framework_TestCase
+class GetEventStatsForAccountTest extends TestCase
 {
     /**
      * @var GetEventStatsForAccount
      */
-    protected $instance;
+    private GetEventStatsForAccount $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetEventStatsForAccount(123, 456);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -55,4 +57,3 @@ class GetEventStatsForAccountTest extends \PHPUnit_Framework_TestCase
         ], $this->instance->getParams());
     }
 }
- 

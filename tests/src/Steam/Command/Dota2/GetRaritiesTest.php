@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Dota2;
+namespace SquegTech\Steam\Tests\Command\Dota2;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Dota2\GetRarities;
 
-class GetRaritiesTest extends \PHPUnit_Framework_TestCase
+class GetRaritiesTest extends TestCase
 {
     /**
      * @var GetRarities
      */
-    protected $instance;
+    private GetRarities $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetRarities();
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -50,4 +52,3 @@ class GetRaritiesTest extends \PHPUnit_Framework_TestCase
         ], $this->instance->getParams());
     }
 }
- 

@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Dota2;
+namespace SquegTech\Steam\Tests\Command\Dota2;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Dota2\GetHeroes;
 
-class GetHeroesTest extends \PHPUnit_Framework_TestCase
+class GetHeroesTest extends TestCase
 {
     /**
      * @var GetHeroes
      */
-    protected $instance;
+    private GetHeroes $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetHeroes();
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -87,4 +89,3 @@ class GetHeroesTest extends \PHPUnit_Framework_TestCase
         ], $this->instance->getParams());
     }
 }
- 
