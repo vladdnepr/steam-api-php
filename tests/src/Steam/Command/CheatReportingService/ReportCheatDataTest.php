@@ -1,24 +1,27 @@
 <?php
 
-namespace Steam\Command\CheatReportingService;
+namespace SquegTech\Steam\Tests\Command\CheatReportingService;
 
-use Steam\Command\CommandInterface;
+use DateTime;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CheatReportingService\ReportCheatData;
+use SquegTech\Steam\Command\CommandInterface;
 
-class ReportCheatDataTest extends \PHPUnit_Framework_TestCase
+class ReportCheatDataTest extends TestCase
 {
     /**
      * @var ReportCheatData
      */
-    protected $instance;
+    private ReportCheatData $instance;
 
     /**
      * @var \DateTime
      */
-    protected $dateTime;
+    private $dateTime;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->dateTime = new \DateTime();
+        $this->dateTime = new DateTime();
 
         $this->instance = new ReportCheatData(
             123456789,
@@ -36,7 +39,7 @@ class ReportCheatDataTest extends \PHPUnit_Framework_TestCase
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

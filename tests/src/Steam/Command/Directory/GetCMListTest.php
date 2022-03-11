@@ -1,30 +1,26 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: daniel
- * Date: 18/05/2015
- * Time: 23:21
- */
 
-namespace Steam\Command\Directory;
+namespace SquegTech\Steam\Tests\Command\Directory;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\CommandInterface;
+use SquegTech\Steam\Command\Directory\GetCMList;
 
-class GetCMListTest extends \PHPUnit_Framework_TestCase
+class GetCMListTest extends TestCase
 {
     /**
      * @var GetCMList
      */
-    protected $instance;
+    private GetCMList $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetCMList(123);
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

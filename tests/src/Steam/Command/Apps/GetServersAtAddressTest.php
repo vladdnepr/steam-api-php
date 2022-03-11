@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Apps;
+namespace SquegTech\Steam\Tests\Command\Apps;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\Apps\GetServersAtAddress;
+use SquegTech\Steam\Command\CommandInterface;
 
-class GetServersAtAddressTest extends \PHPUnit_Framework_TestCase
+class GetServersAtAddressTest extends TestCase
 {
     /**
      * @var GetServersAtAddress
      */
-    protected $instance;
+    private GetServersAtAddress $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetServersAtAddress('127.0.0.1');
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()

@@ -1,24 +1,26 @@
 <?php
 
-namespace Steam\Command\Apps;
+namespace SquegTech\Steam\Tests\Command\Apps;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\Apps\GetAppList;
+use SquegTech\Steam\Command\CommandInterface;
 
-class AppListTest extends \PHPUnit_Framework_TestCase
+class AppListTest extends TestCase
 {
     /**
      * @var GetAppList
      */
-    protected $instance;
+    private GetAppList $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new GetAppList();
     }
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
@@ -30,4 +32,3 @@ class AppListTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $this->instance->getParams());
     }
 }
- 

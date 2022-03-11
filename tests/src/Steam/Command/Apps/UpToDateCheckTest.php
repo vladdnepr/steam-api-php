@@ -1,10 +1,12 @@
 <?php
 
-namespace Steam\Command\Apps;
+namespace SquegTech\Steam\Tests\Command\Apps;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\Apps\UpToDateCheck;
+use SquegTech\Steam\Command\CommandInterface;
 
-class UpToDateCheckTest extends \PHPUnit_Framework_TestCase
+class UpToDateCheckTest extends TestCase
 {
 
     public function testImplementsInterface()
@@ -13,7 +15,7 @@ class UpToDateCheckTest extends \PHPUnit_Framework_TestCase
         $version = 123;
         $instance = new UpToDateCheck($appId, $version);
 
-        $this->assertTrue($instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $instance);
     }
 
     public function testValues()
@@ -44,4 +46,3 @@ class UpToDateCheckTest extends \PHPUnit_Framework_TestCase
         ], $instance->getParams());
     }
 }
- 

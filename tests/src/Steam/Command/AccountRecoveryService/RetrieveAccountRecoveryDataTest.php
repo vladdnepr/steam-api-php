@@ -1,17 +1,19 @@
 <?php
 
-namespace Steam\Command\AccountRecoveryService;
+namespace SquegTech\Steam\Tests\Command\AccountRecoveryService;
 
-use Steam\Command\CommandInterface;
+use PHPUnit\Framework\TestCase;
+use SquegTech\Steam\Command\AccountRecoveryService\RetrieveAccountRecoveryData;
+use SquegTech\Steam\Command\CommandInterface;
 
-class RetrieveAccountRecoveryDataTest extends \PHPUnit_Framework_TestCase
+class RetrieveAccountRecoveryDataTest extends TestCase
 {
     /**
      * @var RetrieveAccountRecoveryData
      */
-    protected $instance;
+    private RetrieveAccountRecoveryData $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new RetrieveAccountRecoveryData(
             'requestHandle'
@@ -20,7 +22,7 @@ class RetrieveAccountRecoveryDataTest extends \PHPUnit_Framework_TestCase
 
     public function testImplementsInterface()
     {
-        $this->assertTrue($this->instance instanceof CommandInterface);
+        $this->assertInstanceOf(CommandInterface::class, $this->instance);
     }
 
     public function testValues()
