@@ -58,7 +58,7 @@ jobs:
         run: docker-compose up -d
 
       - name: Run PHPUnit tests
-        run: docker-compose exec squegtech-steam-api vendor/phpunit/phpunit/phpunit
+        run: docker-compose exec -T squegtech-steam-api vendor/phpunit/phpunit/phpunit
 
 
 
