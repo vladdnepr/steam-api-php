@@ -1,4 +1,5 @@
 #Steam API Wrapper
+
 [![PHPUnit](https://github.com/SquegTech/steam-api-php/actions/workflows/phpunit.yml/badge.svg)](https://github.com/SquegTech/steam-api-php/actions/workflows/phpunit.yml)
 
 A PHP wrapper for the Steam API. Updated and maintained for the latest versions of PHP and Guzzle.
