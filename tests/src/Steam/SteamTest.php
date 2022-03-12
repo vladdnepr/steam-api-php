@@ -2,8 +2,10 @@
 
 namespace SquegTech\Steam\Tests;
 
+use GuzzleHttp\Psr7\Response;
 use Mockery as M;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\StreamInterface;
 use SquegTech\Steam\Command\CommandInterface;
 use SquegTech\Steam\Runner\RunnerInterface;
 use SquegTech\Steam\Steam;
@@ -64,18 +66,48 @@ class SteamTest extends TestCase
         $resultOne = 'called';
         $resultTwo = 'called second';
 
+        $streamOne = M::mock(StreamInterface::class);
+        $streamOne->shouldReceive('getContents')
+            ->andReturn($resultOne)
+            ->once();
+        $responseOne = M::mock(Response::class);
+        $responseOne->shouldReceive('getBody')
+            ->andReturn($streamOne)
+            ->once();
+
         $runnerMockOne = M::mock(RunnerInterface::class);
-        $runnerMockOne->shouldReceive('setConfig')->with($this->config)->andReturnSelf()->once();
-        $runnerMockOne->shouldReceive('run')->with($commandMock, null)->andReturn($resultOne)->once();
+        $runnerMockOne->shouldReceive('setConfig')
+            ->with($this->config)
+            ->andReturnSelf()
+            ->once();
+        $runnerMockOne->shouldReceive('run')
+            ->with($commandMock, null)
+            ->andReturn($responseOne)
+            ->once();
+
+        $streamTwo = M::mock(StreamInterface::class);
+        $streamTwo->shouldReceive('getContents')
+            ->andReturn($resultTwo)
+            ->once();
+        $responseTwo = M::mock(Response::class);
+        $responseTwo->shouldReceive('getBody')
+            ->andReturn($streamTwo)
+            ->once();
 
         $runnerMockTwo = M::mock(RunnerInterface::class);
-        $runnerMockTwo->shouldReceive('setConfig')->with($this->config)->andReturnSelf()->once();
-        $runnerMockTwo->shouldReceive('run')->with($commandMock, $resultOne)->andReturn($resultTwo)->once();
+        $runnerMockTwo->shouldReceive('setConfig')
+            ->with($this->config)
+            ->andReturnSelf()
+            ->once();
+        $runnerMockTwo->shouldReceive('run')
+            ->with($commandMock, $responseOne)
+            ->andReturn($responseTwo)
+            ->once();
 
         $this->instance->addRunner($runnerMockOne);
         $this->instance->addRunner($runnerMockTwo);
 
-        $this->assertEquals($resultTwo, $this->instance->run($commandMock));
+        $this->assertEquals($resultTwo, $this->instance->run($commandMock)->getBody()->getContents());
     }
 
     public function testAddingTwoRunnersFromArray()
@@ -85,17 +117,47 @@ class SteamTest extends TestCase
         $resultOne = 'called';
         $resultTwo = 'called second';
 
+        $streamOne = M::mock(StreamInterface::class);
+        $streamOne->shouldReceive('getContents')
+            ->andReturn($resultOne)
+            ->once();
+        $responseOne = M::mock(Response::class);
+        $responseOne->shouldReceive('getBody')
+            ->andReturn($streamOne)
+            ->once();
+
         $runnerMockOne = M::mock(RunnerInterface::class);
-        $runnerMockOne->shouldReceive('setConfig')->with($this->config)->andReturnSelf()->once();
-        $runnerMockOne->shouldReceive('run')->with($commandMock, null)->andReturn($resultOne)->once();
+        $runnerMockOne->shouldReceive('setConfig')
+            ->with($this->config)
+            ->andReturnSelf()
+            ->once();
+        $runnerMockOne->shouldReceive('run')
+            ->with($commandMock, null)
+            ->andReturn($responseOne)
+            ->once();
+
+        $streamTwo = M::mock(StreamInterface::class);
+        $streamTwo->shouldReceive('getContents')
+            ->andReturn($resultTwo)
+            ->once();
+        $responseTwo = M::mock(Response::class);
+        $responseTwo->shouldReceive('getBody')
+            ->andReturn($streamTwo)
+            ->once();
 
         $runnerMockTwo = M::mock(RunnerInterface::class);
-        $runnerMockTwo->shouldReceive('setConfig')->with($this->config)->andReturnSelf()->once();
-        $runnerMockTwo->shouldReceive('run')->with($commandMock, $resultOne)->andReturn($resultTwo)->once();
+        $runnerMockTwo->shouldReceive('setConfig')
+            ->with($this->config)
+            ->andReturnSelf()
+            ->once();
+        $runnerMockTwo->shouldReceive('run')
+            ->with($commandMock, $responseOne)
+            ->andReturn($responseTwo)
+            ->once();
 
         $this->instance->addRunners([$runnerMockOne, $runnerMockTwo]);
 
-        $this->assertEquals($resultTwo, $this->instance->run($commandMock));
+        $this->assertEquals($resultTwo, $this->instance->run($commandMock)->getBody()->getContents());
     }
 
     public function testGettingAndSettingConfig()
