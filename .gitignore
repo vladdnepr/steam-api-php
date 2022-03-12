@@ -6,5 +6,6 @@ composer.phar
 *.iml
 .idea
 phpunit.xml
+.phpunit.result.cache
 
 demo/steamKey.php
