@@ -28,31 +28,37 @@ jobs:
       # Runs a single command using the runners shell
       - name: Update apt
         run: sudo apt update
-        
+
       - name: Install dependencies
         run: sudo apt install apt-transport-https ca-certificates curl software-properties-common
 
       - name: Add Docker GPG key to APT
         run: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-        
+
       - name: Add Docker repository to APT
         run: sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-        
+
       - name: Install Docker
         run: sudo apt install docker-ce
-        
+
       - name: Add current user to Docker group
         run: sudo usermod -aG docker ${USER}
-        
+
       - name: Download Docker Compose
         run: |
           mkdir -p ~/.docker/cli-plugins/
           curl -SL https://github.com/docker/compose/releases/download/v2.3.3/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
-          
+
       - name: Set Docker Compose permissions
         run: |
           chmod +x ~/.docker/cli-plugins/docker-compose
           sudo chown $USER /var/run/docker.sock
+
+      - name: Start Docker Compose
+        run: docker-compose up -d
+
+      - name: Run PHPUnit tests
+        run: docker-compose exec squegtech-steam-api vendor/phpunit/phpunit/phpunit
 
 
 
