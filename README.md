@@ -56,7 +56,7 @@ $steam = new Steam(new Configuration([
 
 Command
 -------
-Commands are the classes that describe each endpoint. Each command implements `SquegTech\Steam\Command\CommandInterface` and has methods that will give the runners its interface, method, version, HTTP method and any parameterqqqqqs the endpoint requires.
+Commands are the classes that describe each endpoint. Each command implements `SquegTech\Steam\Command\CommandInterface` and has methods that will give the runners its interface, method, version, HTTP method and any parameters the endpoint requires.
 
 The majority of commands are for GET endpoints. The POST endpoints are not fully implemented so please submit PRs for those you'd like to add.
 
