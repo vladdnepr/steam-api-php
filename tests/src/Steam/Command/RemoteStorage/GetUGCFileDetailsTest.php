@@ -45,4 +45,13 @@ class GetUGCFileDetailsTest extends TestCase
             'steamid' => 123,
         ], $this->instance->getParams());
     }
+
+    public function testUgcidCanBeString()
+    {
+        $instance = new GetUGCFileDetails(123, 'foo');
+        $this->assertEquals([
+            'appid' => 123,
+            'ugcid' => 'foo',
+        ], $instance->getParams());
+    }
 }

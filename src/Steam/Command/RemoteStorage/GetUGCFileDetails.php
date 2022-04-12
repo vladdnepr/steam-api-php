@@ -13,11 +13,11 @@ class GetUGCFileDetails implements CommandInterface
 
     /**
      * @param int $appId
-     * @param int $ugcId
+     * @param int|string $ugcId
      */
     public function __construct(
         private int $appId,
-        private int $ugcId
+        private int|string $ugcId
     ) {}
 
     /**
