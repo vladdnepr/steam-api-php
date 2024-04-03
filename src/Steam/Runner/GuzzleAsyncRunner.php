@@ -41,6 +41,10 @@ class GuzzleAsyncRunner extends AbstractRunner implements RunnerInterface
                 $options[$key]['key'] = $config->getSteamKey();
             }
 
+            if(!empty($config->getAccessToken())) {
+                $options[$key]['access_token'] = $config->getAccessToken();
+            }
+
             $this->urlBuilder->setBaseUrl($config->getBaseSteamApiUrl());
         }
 
