@@ -7,6 +7,7 @@ use SquegTech\Steam\Exception\InvalidConfigOptionException;
 class Configuration
 {
     public const STEAM_KEY = 'steam_key';
+    public const ACCESS_TOKEN = 'access_token';
     private const BASE_STEAM_API_URL = 'base_steam_api_url';
 
     /**
@@ -14,6 +15,7 @@ class Configuration
      */
     private array $options = [
         self::STEAM_KEY => '',
+        self::ACCESS_TOKEN => '',
         self::BASE_STEAM_API_URL => Steam::BASE_URL,
     ];
 
@@ -58,6 +60,14 @@ class Configuration
     public function getSteamKey(): string
     {
         return $this->options[self::STEAM_KEY];
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccessToken(): string
+    {
+        return $this->options[self::ACCESS_TOKEN];
     }
 
     /**
