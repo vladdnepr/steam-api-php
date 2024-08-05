@@ -27,7 +27,8 @@ class GuzzleAsyncRunner extends AbstractRunner implements RunnerInterface
      */
     public function run(CommandInterface $command, ResponseInterface|null $result = null): PromiseInterface
     {
-        $key = $command->getRequestMethod() === 'GET' ? 'query' : 'body';
+        //$key = $command->getRequestMethod() === 'GET' ? 'query' : 'body';
+        $key = 'query';
         $options = [
             $key => []
         ];
